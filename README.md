@@ -1,31 +1,26 @@
-# camotion/frontend-vue2
+# CAMotion (camotion)
 
+CAMotion - A security app with camera motion detecing & tracking.
 
-
-## Getting Started
-
-Download links:
-
-SSH clone URL: ssh://git@git.jetbrains.space/zrp/camotion/frontend-vue2.git
-
-HTTPS clone URL: https://git.jetbrains.space/zrp/camotion/frontend-vue2.git
-
-
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-## Prerequisites
-
-What things you need to install the software and how to install them.
-
-```
-Examples
+## Install the dependencies
+```bash
+yarn
 ```
 
-## Deployment
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
+```bash
+quasar dev
+```
 
-Add additional notes about how to deploy this on a production system.
+### Lint the files
+```bash
+yarn run lint
+```
 
-## Resources
+### Build the app for production
+```bash
+quasar build
+```
 
-Add links to external resources for this project, such as CI server, bug tracker, etc.
+### Customize the configuration
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
