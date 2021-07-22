@@ -149,6 +149,47 @@ export default {
       }
     }
   },
+  created() {
+    if(sessionStorage.getItem('user_id') === undefined)
+    {
+      this.$router.push('/')
+    }
+    let user_id = sessionStorage.getItem('user_id')
+    this.$axios.get('http://camotion.zrp.cool:8000/user/' + user_id).then(
+      (response) => {
+        console.log(response)
+        let res = response.data
+        if(res.status === 'Success') {
+          this.username = res.name
+          switch (res.role) {
+            case 0:
+              this.user_role = 'User'
+              break;
+            case 1:
+              this.user_role = 'VIP'
+              break;
+            case 100:
+              this.user_role = 'Admin'
+              break;
+            default:
+              this.user_role = ''
+              break;
+            }
+          } else {
+          this.$q.notify({
+            type: 'negative',
+            message: 'Internal error.'
+          })
+          }
+      }).catch( (error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+    })
+  }
+  ,
   methods: {
     change_password() {
       //后端判断cur_password对不对
