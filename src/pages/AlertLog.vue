@@ -48,9 +48,9 @@
         </template>
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
-            <q-btn icon="image" size="sm" @click="card = true" flat dense/>
-            <q-btn icon="check" size="sm" class="q-ml-sm" v-if="props.row.Result === 'unhandled'" @click = "props.row.Result = 'handled'" flat dense/>
-            <q-btn icon="cancel" size="sm" class="q-ml-sm" v-if="props.row.Result === 'handled'" @click = "props.row.Result = 'unhandled'" flat dense/>
+            <q-btn icon="image" size="md" @click="card = true" flat dense/>
+            <q-btn icon="check" size="md" color="red" class="q-ml-sm" v-if="props.row.Result === 'unhandled'" @click = "props.row.Result = 'handled'" flat dense/>
+            <q-btn icon="cancel" size="md" class="q-ml-sm" v-if="props.row.Result === 'handled'" @click = "props.row.Result = 'unhandled'" flat dense/>
 
           </q-td>
         </template>
