@@ -24,6 +24,7 @@
         <q-btn label="reset filter" color="primary" @click="resetFilter"></q-btn>
       </div>
     </q-card-section>
+
     <q-card-section class="q-pa-none">
       <q-table :data="data"
                :columns="columns" hide-bottom
@@ -47,9 +48,10 @@
         </template>
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
-            <q-btn icon="image" size="sm" flat dense/>
+            <q-btn icon="image" size="sm" @click="card = true" flat dense/>
             <q-btn icon="check" size="sm" class="q-ml-sm" v-if="props.row.Result === 'unhandled'" @click = "props.row.Result = 'handled'" flat dense/>
             <q-btn icon="cancel" size="sm" class="q-ml-sm" v-if="props.row.Result === 'handled'" @click = "props.row.Result = 'unhandled'" flat dense/>
+
           </q-td>
         </template>
       </q-table>
@@ -58,15 +60,82 @@
 
   </q-card>
 
+    <q-dialog v-model="card">
+      <q-card class="my-card">
+        <q-img src="~assets/screenshot.jpg" style="width: 600px"/>
+
+        <q-card-section>
+          <q-btn
+            fab
+            color="primary"
+            icon="place"
+            class="absolute"
+            style="top: 0; right: 12px; transform: translateY(-50%);"
+          />
+
+          <div class="row no-wrap items-center">
+            <div class="col text-h6 ellipsis">
+              Screenshot
+            </div>
+            <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
+              <q-icon name="place" />
+              250 ft
+            </div>
+          </div>
+
+          <q-rating v-model="stars" :max="5" size="32px" />
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div class="text-subtitle1">
+            $・Italian, Cafe
+          </div>
+          <div class="text-caption text-grey">
+            Small plates, salads & sandwiches in an intimate setting.
+          </div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup flat color="primary" label="Reserve" />
+          <q-btn v-close-popup flat color="primary" round icon="event" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 
 </template>
 
 <script>
+
 export default {
+  setup () {
+    return {
+      carousel: ref(false),
+      card: ref(false),
+      sliders: ref(false),
+
+      slide: ref(1),
+      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
+
+      stars: ref(3),
+
+      slideVol: ref(39),
+      slideAlarm: ref(56),
+      slideVibration: ref(63)
+    }
+  },
   name: "TableActions",
   data() {
     return {
+      card: false,
+
+      slide: 1,
+      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
+
+      stars: 3,
+
       foptions: [
         {
           label: 'unhandled',
@@ -127,9 +196,8 @@ export default {
 
     methods:
     {
-      changeResult() {
-        this.data.Result = "handled";
-      },
+
+
       toggleFilter(index)
       {
         if (index === 0 && this.foptions[0].value) {
