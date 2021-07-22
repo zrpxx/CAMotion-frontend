@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-sm">
-    <card-social icon_position="right" />
+    <card-social icon_position="right" :items="items" />
 
     <q-card class="q-mt-sm">
       <q-card-section class="text-h6 q-pb-none">
@@ -170,45 +170,18 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <q-card>
           <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify">
-            <q-tab name="contact" :class="tab == 'contact' ? 'text-blue' : ''" icon="contacts" label="Contact" />
+            <!--<q-tab name="contact" :class="tab == 'contact' ? 'text-blue' : ''" icon="contacts" label="Contact" />-->
             <q-tab name="message" :class="tab == 'message' ? 'text-blue' : ''" icon="comment" label="Message">
               <q-badge color="red" floating>{{ messages.length }}</q-badge>
             </q-tab>
-            <q-tab name="notification" :class="tab == 'notification' ? 'text-blue' : ''" icon="notifications" label="Notification">
+          <!--  <q-tab name="notification" :class="tab == 'notification' ? 'text-blue' : ''" icon="notifications" label="Notification">
               <q-badge color="red" floating>4</q-badge>
-            </q-tab>
+            </q-tab>-->
           </q-tabs>
 
           <q-separator />
 
           <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="contact" class="q-pa-sm">
-              <q-list class="rounded-borders" separator>
-                <q-item v-for="(contact, index) in contacts" :key="index">
-                  <q-item-section avatar>
-                    <q-avatar>
-                      <img :src="contact.avatar" />
-                    </q-avatar>
-                  </q-item-section>
-
-                  <q-item-section>
-                    <q-item-label lines="1">{{ contact.name }}</q-item-label>
-                    <q-item-label caption lines="2">
-                      <span class="text-weight-bold">{{ contact.position }}</span>
-                    </q-item-label>
-                  </q-item-section>
-
-                  <q-item-section side>
-                    <div class="text-grey-8 q-gutter-xs">
-                      <q-btn class="gt-xs" size="md" flat color="blue" dense round icon="comment" />
-                      <q-btn class="gt-xs" size="md" flat color="red" dense round icon="email" />
-                      <q-btn size="md" flat dense round color="green" icon="phone" />
-                    </div>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-tab-panel>
-
             <q-tab-panel name="message" class="q-pa-sm">
               <q-item v-for="msg in messages" :key="msg.id" clickable v-ripple>
                 <q-item-section avatar>
@@ -228,39 +201,7 @@
               </q-item>
             </q-tab-panel>
 
-            <q-tab-panel name="notification" class="q-pa-sm">
-              <q-list>
-                <q-item clickable v-ripple>
-                  <q-item-section avatar>
-                    <q-avatar color="teal" text-color="white" icon="info" />
-                  </q-item-section>
 
-                  <q-item-section>Avatar-type icon</q-item-section>
-                </q-item>
-                <q-item clickable v-ripple>
-                  <q-item-section avatar>
-                    <q-avatar color="teal" text-color="white" icon="report" />
-                  </q-item-section>
-
-                  <q-item-section>Avatar-type icon</q-item-section>
-                </q-item>
-                <q-item clickable v-ripple>
-                  <q-item-section avatar>
-                    <q-avatar color="teal" text-color="white" icon="remove" />
-                  </q-item-section>
-
-                  <q-item-section>Avatar-type icon</q-item-section>
-                </q-item>
-
-                <q-item clickable v-ripple>
-                  <q-item-section avatar>
-                    <q-avatar color="teal" text-color="white" icon="remove_circle_outline" />
-                  </q-item-section>
-
-                  <q-item-section>Avatar-type icon</q-item-section>
-                </q-item>
-              </q-list>
-            </q-tab-panel>
           </q-tab-panels>
         </q-card>
       </div>
@@ -338,7 +279,37 @@ export default {
   data() {
     return {
       slide: 1,
-      tab: "contact",
+      items: [
+        {
+          title: "Numbers of camera",
+          icon: "camera",
+          value: "10",
+          color1: "#546bfa",
+          color2: "#3e51b5"
+        },
+        {
+          title: "Numbers of VIP",
+          icon: "account_circle",
+          value: "5",
+          color1: "#3a9688",
+          color2: "#3e51b5"
+        },
+        {
+          title: "New Customers",
+          icon: "person_add",
+          value: "2",
+          color1: "#7cb342",
+          color2: "#3e51b5"
+        },
+        {
+          title: "Active Users",
+          icon: "person",
+          value: "8",
+          color1: "#f88c2b",
+          color2: "#3e51b5"
+        }
+      ],
+      tab: "message",
       messages: [
         {
           id: 5,

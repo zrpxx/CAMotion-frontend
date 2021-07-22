@@ -65,6 +65,8 @@
 
         </q-card>
       </div>
+
+
       <div class="q-mx-auto q-my-xl" style="width: 80%">
         <q-card>
           <q-card-section class="text-h6 q-pa-sm">
@@ -83,6 +85,31 @@
             <q-btn class="text-capitalize">Save settings</q-btn>
           </q-card-actions>
         </q-card>
+
+
+        <div class="q-mx-auto q-my-xl" style="width: 100%">
+        <q-card>
+          <q-card-section class="text-h6 q-pa-sm">
+            <div class="text-h6">用户反馈</div>
+          </q-card-section>
+
+
+            <div class="q-pa-md" style="max-width: 1000px;max-height: 500px">
+              <q-input
+                v-model="reportText"
+                filled
+                type="textarea"
+              />
+            </div>
+
+
+          <q-card-actions align="center">
+            <q-btn class="text-capitalize" @click = "send()"> 提交 </q-btn>
+          </q-card-actions>
+
+        </q-card>
+        </div>
+
       </div>
     </div>
   </q-page>
@@ -95,6 +122,7 @@ export default {
     return {
       username: 'A1',
       user_role: 'Vip',
+      reportText: '',
       warning_option: [
         'web',
         'e-mail'
@@ -136,7 +164,13 @@ export default {
     change_alert() {
 
     },
-
+  send(){
+      this.$q.notify({
+        type:'positive',
+        message:'发送成功'
+      })
+      this.reportText = ''
+  }
     /*
     register_vip() {
       if(this.user_role === "User")
