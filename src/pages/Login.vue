@@ -75,6 +75,6 @@
 
 <style scoped>
   .bg-image {
-      background-image: linear-gradient(30deg, #7028e4 0%, #e5b2ca 100%);
+      background-image: linear-gradient(30deg, #7028e4 0%, #e5b2ca 60%);
   }
 </style>

@@ -8,10 +8,13 @@
               <img src="~assets/profile.svg">
             </q-avatar>
             <div class="text-subtitle1 q-mt-lg">Welcome!</div>
-            <div class="text-h3 q-mt-md">{{ username }}</div>
+            <div class="text-h3 q-mt-md"> {{ username }}
+              <q-badge align="top" >{{user_role}}</q-badge>
+            </div>
+
           </q-card-section>
           <q-card-section class="text-center">
-            <q-badge :label="user_role" class="text-h3"></q-badge>
+            <q-btn class="text-capitalize" color = "primary">{{ register_vip() }} </q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -28,7 +31,7 @@
             </q-item>
             <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
               <q-item-section>
-                <q-input type="password"  dense outlined  round v-model="password_dict.current_password"
+                <q-input type="password"  dense outlined  round v-model="password_dict.cur_password"
                          label="Current Password"/>
               </q-item-section>
             </q-item>
@@ -50,13 +53,13 @@
             </q-item>
             <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
               <q-item-section>
-                <q-input type="password"  dense outlined round  v-model="password_dict.confirm_new_password"
+                <q-input type="password"  dense outlined round  v-model="password_dict.con_new_password"
                          label="Confirm New Password"/>
               </q-item-section>
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize">Change Password</q-btn>
+            <q-btn class="text-capitalize" @click = "change_password()"> Change Password </q-btn>
           </q-card-actions>
 
         </q-card>
@@ -90,7 +93,7 @@ export default {
   data() {
     return {
       username: 'A1',
-      user_role: 'VIP',
+      user_role: 'Vip',
       warning_option: [
         'web',
         'e-mail'
@@ -110,7 +113,33 @@ export default {
         }
       ],
       user_details: {},
-      password_dict: {}
+      password_dict: {
+        new_password: '',
+        cur_password: '',
+        con_new_password: ''
+      }
+    }
+  },
+  methods: {
+    change_password() {
+      //后端判断cur_password对不对
+      if (this.password_dict.new_password !== "" &&
+        this.password_dict.new_password === this.password_dict.con_new_password) {
+        //<!-- 后端修改 -->
+        this.$q.notify({
+          type: 'positive',
+          message: '修改成功'
+        })
+      }
+    },
+    change_alert() {
+
+    },
+    register_vip() {
+      if(this.user_role === "User")
+        return "register vip"
+      else
+        return "vip renewal"
     }
   }
 }
