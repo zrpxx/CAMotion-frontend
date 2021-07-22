@@ -42,6 +42,15 @@
             <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
           </template>
 
+            <q-item clickable v-ripple @click="logout()">
+              <q-item-section avatar>
+                <q-icon name="logout" />
+              </q-item-section>
+              <q-item-section>
+                Logout
+              </q-item-section>
+            </q-item>
+
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -81,6 +90,12 @@ export default {
           to: '/admin'
         }
       ]
+    }
+  },
+  methods: {
+    logout() {
+      sessionStorage.removeItem('user_id')
+      this.$router.push('/')
     }
   }
 }

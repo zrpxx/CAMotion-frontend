@@ -153,7 +153,7 @@ export default {
 
   },
   created() {
-    if(sessionStorage.getItem('user_id') === undefined)
+    if(sessionStorage.getItem('user_id') === undefined || sessionStorage.getItem('user_id') === null)
     {
       this.$router.push('/')
     }
