@@ -218,15 +218,30 @@ export default {
         })
       }
       this.reportText = ''
+  },
+  buy_vip(){
+    this.$axios.post('http://camotion.zrp.cool:8000/buy_vip', {
+      'user_id': this.user_id
+    }).then( (response) => {
+      console.log(response)
+      let res = response.data
+      if(res.status === 'Success') {
+        this.user_role = res.role
+      } else {
+        //console.log(res.message)
+        this.$q.notify({
+          type: 'warning',
+          message: res.status
+        })
+      }
+    }).catch( (error) => {
+      console.log(error)
+      this.$q.notify({
+        type: 'negative',
+        message: 'Internal error.'
+      })
+    })
   }
-    /*
-    register_vip() {
-      if(this.user_role === "User")
-        return "register vip"
-      else
-        return "vip renewal"
-    }
-    */
   }
 }
 </script>
