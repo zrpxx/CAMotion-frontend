@@ -60,7 +60,7 @@
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize" @click = "change_password()"> Change Password </q-btn>
+            <q-btn class="text-capitalize" @click = "change_password()" > Change Password </q-btn>
           </q-card-actions>
 
         </q-card>
@@ -149,6 +149,9 @@ export default {
       }
     }
   },
+  modify(){
+
+  },
   created() {
     if(sessionStorage.getItem('user_id') === undefined)
     {
@@ -192,13 +195,37 @@ export default {
   ,
   methods: {
     change_password() {
-      //后端判断cur_password对不对
-      if (this.password_dict.new_password !== "" &&
-        this.password_dict.new_password === this.password_dict.con_new_password) {
-        //<!-- 后端修改 -->
+      if(this.password_dict.new_password===this.password_dict.con_new_password) {
+        this.$axios.post('http://camotion.zrp.cool:8000/modify_password', {
+          'username': this.username,
+          'password': this.password_dict.cur_password,
+          'new_password': this.password_dict.new_password
+        }).then((response) => {
+          console.log(response)
+          let res = response.data
+          if (res.status === 'Success') {
+            this.$q.notify({
+              type: 'positive',
+              message: '修改成功'
+            })
+          } else {
+            //console.log(res.message)
+            this.$q.notify({
+              type: 'warning',
+              message: res.message
+            })
+          }
+        }).catch((error) => {
+          console.log(error)
+          this.$q.notify({
+            type: 'negative',
+            message: 'Internal error.'
+          })
+        })
+      }else{
         this.$q.notify({
-          type: 'positive',
-          message: '修改成功'
+          type: 'warning',
+          message: '前后输入的密码不一致.'
         })
       }
     },
