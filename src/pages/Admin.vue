@@ -1,19 +1,9 @@
 <template>
   <q-page class="q-pa-sm">
     <card-social icon_position="right" :items="items" />
-
     <q-card class="q-mt-sm">
-      <q-card-section class="text-h6 q-pb-none">
-        <q-item>
-          <q-item-section avatar class="">
-            <q-icon color="blue" name="insights" size="44px" />
-          </q-item-section>
 
-          <q-item-section>
-            <div class="text-h6">Statistics</div>
-          </q-item-section>
-        </q-item>
-      </q-card-section>
+
       <q-card-section class="row">
         <div class="col-lg-7 col-sm-12 col-xs-12 col-md-7">
           <div>
@@ -21,20 +11,35 @@
               <q-item-section avatar class="">
                 <q-icon color="green" name="person_add" class="q-pl-md" size="24px" />
               </q-item-section>
-
               <q-item-section>
                 <div class="text-h6">Recent register & camera </div>
               </q-item-section>
             </q-item>
-            <IEcharts style="height: 250px" :option="registerStatistic" :resizable="true" />
+            <IEcharts style="height: 250px" :option="recent_camera" :resizable="true" />
           </div>
         </div>
+
+        <div class="col-lg-5 col-sm-12 col-xs-12 col-md-5">
+          <q-item>
+            <q-item-section avatar class="">
+              <q-icon color="blue" name="insights" size="44px" />
+            </q-item-section>
+            <q-item-section>
+              <div class="text-h6">Stactics</div>
+            </q-item-section>
+          </q-item>
+          <div>
+            <IEcharts style="height: 250px" :option="registerStatistic" :resizable="true" />
+           <!-- <IEcharts style="height: 250px" :option="alertStatistic" :resizable="true" />-->
+          </div>
+        </div>
+
+
         <div class="col-lg-5 col-sm-12 col-xs-12 col-md-5">
           <q-item>
             <q-item-section avatar class="">
               <q-icon color="red" name="warning" class="q-pl-md" size="24px" />
             </q-item-section>
-
             <q-item-section>
               <div class="text-h6">Recent alerts</div>
             </q-item-section>
@@ -157,6 +162,45 @@ export default {
   data() {
     return {
       slide: 1,
+      recent_camera:{
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // Coordinate axis indicator, coordinate axis trigger is valid
+            type: "shadow" // The default is a straight line, optional:'line' |'shadow'
+          }
+        },
+        grid: {
+          left: "2%",
+          right: "2%",
+          top: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: ["7.19", "7.20", "7.21", "7.22", "7.23", "7.24" ,"7.25"]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        series: [
+
+          {
+            name: "Camera add",
+            type: "bar",
+            data: [4, 2, 8, 9, 1, 4, 6],
+            color: "#336c1a"
+          }
+        ]
+      },
       registerStatistic: {
         tooltip: {
           trigger: "axis",
@@ -193,12 +237,7 @@ export default {
             data: [40, 45, 27, 50, 32, 50, 70],
             color: "#546bfa"
           },
-          {
-            name: "Camera add",
-            type: "bar",
-            data: [4, 2, 8, 9, 1, 4, 6],
-            color: "#336c1a"
-          }
+
         ]
       },
       alertStatistic: {
