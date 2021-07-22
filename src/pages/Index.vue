@@ -165,10 +165,17 @@ export default {
 
     },
   send(){
-      this.$q.notify({
-        type:'positive',
-        message:'发送成功'
-      })
+      if(this.reportText!=="") {
+        this.$q.notify({
+          type: 'positive',
+          message: '发送成功'
+        })
+      }else{
+        this.$q.notify({
+          type: 'warning',
+          message: '不能发送空白信息'
+        })
+      }
       this.reportText = ''
   }
     /*
