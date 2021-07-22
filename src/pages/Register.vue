@@ -58,16 +58,30 @@
         },
         methods: {
           reg() {
-            // Todo: Request API
-            if(this.username !== '') {
-              this.$router.push('/')
-            }
-            else {
+            this.$axios.post('http://camotion.zrp.cool:8000/register', {
+              'username': this.username,
+              'password': this.password
+            }).then( (response) => {
+              console.log(response)
+              let res = response.data
+              if(res.status === 'Success') {
+                sessionStorage.setItem('user_id', res.user_id)
+                this.$router.push('/home')
+              } else {
+                //console.log(res.message)
+                this.$q.notify({
+                  type: 'warning',
+                  message: res.message
+                })
+              }
+            }).catch( (error) => {
+              console.log(error)
               this.$q.notify({
-                type: 'warning',
-                message: '注册失败'
+                type: 'negative',
+                message: 'Internal error.'
               })
-            }
+            })
+
           }
         }
     }
