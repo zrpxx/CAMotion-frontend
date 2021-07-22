@@ -14,7 +14,8 @@
 
           </q-card-section>
           <q-card-section class="text-center">
-            <q-btn class="text-capitalize" color = "primary">{{ register_vip() }} </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="user_role = 'vip'"> 购买会员 </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-else @click="user_role = 'User'"> 取消会员 </q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -135,12 +136,19 @@ export default {
     change_alert() {
 
     },
+
+    /*
     register_vip() {
       if(this.user_role === "User")
         return "register vip"
       else
         return "vip renewal"
     }
+    */
   }
 }
 </script>
+
+<style>
+
+</style>
