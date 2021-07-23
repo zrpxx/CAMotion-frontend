@@ -190,35 +190,42 @@ export default {
   ,
   methods: {
     user_suggestion(){
-      console.log(this.reportText)
-      this.$axios.post('http://camotion.zrp.cool:8000/create_report', {
-        "user_id": sessionStorage.getItem("user_id"),
-        "info": this.reportText
-      }).then( (response) => {
-        console.log(response)
-        let res = response.data
-        if(res.status === 'Success') {
-          if(this.reportText!=="") {
+      if(this.reportText!=="") {
+        console.log(this.reportText)
+        this.$axios.post('http://camotion.zrp.cool:8000/create_report', {
+          "user_id": sessionStorage.getItem("user_id"),
+          "info": this.reportText
+        }).then((response) => {
+          console.log(response)
+          let res = response.data
+          if (res.status === 'Success') {
+
             this.$q.notify({
               type: 'positive',
               message: 'Send Successfully!'
             })
-            this.reportText=""
+            this.reportText = ""
+
+          } else {
+            //console.log(res.message)
+            this.$q.notify({
+              type: 'warning',
+              message: res.message
+            })
           }
-        } else {
-          //console.log(res.message)
+        }).catch((error) => {
+          console.log(error)
           this.$q.notify({
-            type: 'warning',
-            message: res.message
+            type: 'negative',
+            message: 'Internal error.'
           })
-        }
-      }).catch( (error) => {
-        console.log(error)
-        this.$q.notify({
-          type: 'negative',
-          message: 'Internal error.'
         })
-      })
+      }else{
+        this.$q.notify({
+          type: 'warning',
+          message: "发送内容不能为空白"
+        })
+      }
     },
 
     change_password() {
