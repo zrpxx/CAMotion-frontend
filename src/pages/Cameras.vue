@@ -84,11 +84,11 @@ export default {
       ],
       data: [
         {
-          Id: 'Pratik Patel',
-          Name: '15/3/2020',
-          Url: 'Quasar Admin',
-          working: 80,
-          avatar: 'https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4',
+          Id: '',
+          Name: '',
+          Url: '',
+          working: '',
+          avatar: '',
         }
       ],
       card: false,

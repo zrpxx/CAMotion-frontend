@@ -156,7 +156,7 @@ export default {
         },
         {
           Time: '15/3/2020',
-          Camera_number: '#1',
+          Camera_number: 1,
           Content: "zdd大傻子",
           Result: "unhandled"
         },
@@ -178,6 +178,34 @@ export default {
     }
   },
 
+  created(){
+    this.$axios.get('http://camotion.zrp.cool:8000/get_user_log/' + sessionStorage.getItem("user_id"))
+      .then( (response) => {
+        //console.log(response)
+        let res = response.data
+        console.log(res)
+        for (let i=0; i < res.length; i++) {
+          console.log("i:"+i);
+          const elem = res[i];
+          let a = {};
+          a.Time = elem.time;
+          console.log("time:"+elem.time);
+          a.Camera_number = elem.id;
+          a.Content = elem.attachment;
+          a.Result = elem.info;
+          // ···
+          this.data.push(a);
+          this.$forceUpdate();
+        }
+        console.log('data', this.data)
+      }).catch( (error) => {
+      console.log(error)
+      this.$q.notify({
+        type: 'negative',
+        message: 'Internal error.'
+      })
+    })
+  },
     methods:
     {
 
