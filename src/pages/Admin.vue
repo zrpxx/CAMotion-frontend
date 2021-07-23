@@ -68,19 +68,20 @@
 
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="message" class="q-pa-sm">
-              <q-item v-for="msg in receiveMesage()" :key="msg.id" clickable v-ripple>
+              <q-item v-for="msg in messages" :key="msg.uid" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-avatar>
-                    <img :src="msg.avatar" />
-                  </q-avatar>
+                  <q-img src="~assets/profile.svg"> </q-img>
                 </q-item-section>
 
                 <q-item-section>
-                  <q-item-label>{{ msg.name }}</q-item-label>
-                  <q-item-label caption lines="1">{{ msg.msg }}</q-item-label>
+                  <!--<q-item-label v-if="msg.status === 0"> unhandled </q-item-label>
+                  <q-item-label v-if="msg.status === 1"> handled </q-item-label> -->
+                  <q-item-label class="text-subtitle1"> {{ msg.uid }}</q-item-label>
+                  <q-item-label caption lines="1">{{ msg.info }}</q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
+                  <q-btn  icon="email" style="color:cornflowerblue"> </q-btn>
                   {{ msg.time }}
                 </q-item-section>
               </q-item>
@@ -311,39 +312,9 @@ export default {
       tab: "message",
       messages: [
         {
-          id: 5,
-          name: "Pratik Patel",
-          msg: " -- I'll be in your neighborhood doing errands this\n" + "            weekend. Do you want to grab brunch?",
-          avatar: "https://avatars2.githubusercontent.com/u/34883558?s=400&v=4",
-          time: "10:42 PM"
-        },
-        {
-          id: 6,
-          name: "Winfield Stapforth",
-          msg: " -- I'll be in your neighborhood doing errands this\n" + "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/img/avatar6.jpg",
-          time: "11:17 AM"
-        },
-        {
-          id: 1,
-          name: "Boy",
-          msg: " -- I'll be in your neighborhood doing errands this\n" + "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
-          time: "5:17 AM"
-        },
-        {
-          id: 2,
-          name: "Jeff Galbraith",
-          msg: " -- I'll be in your neighborhood doing errands this\n" + "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/team/jeff_galbraith.jpg",
-          time: "5:17 AM"
-        },
-        {
-          id: 3,
-          name: "Razvan Stoenescu",
-          msg: " -- I'll be in your neighborhood doing errands this\n" + "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/team/razvan_stoenescu.jpeg",
-          time: "5:17 AM"
+          info: "",
+          uid: '',
+          status: ''
         }
       ],
       contacts: [
@@ -452,31 +423,20 @@ export default {
       ]
     };
   },
-  methods: {
-    receiveMesage(){
-      this.$axios.get('http://camotion.zrp.cool:8000/get_undo_repo').then((response) => {
-        console.log(response)
-        let res = response.data
-        if (res.status === '1') {
-          this.$q.notify({
-            type: 'positive',
-            message: 'Handle'
-          })
-        } else {
-          //console.log(res.message)
-          this.$q.notify({
-            type: 'warning',
-            message: res.message
-          })
-        }
-      }).catch((error) => {
-        console.log(error)
-        this.$q.notify({
-          type: 'negative',
-          message: 'Internal error.'
-        })
+  created() {
+    this.$axios.get('http://camotion.zrp.cool:8000/get_undo_repo').then((response) => {
+      console.log(response)
+      let res = response.data
+      this.messages = res;
+    }).catch((error) => {
+      console.log(error)
+      this.$q.notify({
+        type: 'negative',
+        message: 'Internal error.'
       })
-    },
+    })
+  },
+  methods: {
     getColor(val) {
       if (val > 70 && val <= 100) {
         return "green";
