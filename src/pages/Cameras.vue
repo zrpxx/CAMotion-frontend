@@ -1,6 +1,51 @@
 <template>
   <q-card>
     <q-card-section>
+
+      <q-dialog v-model="card">
+        <q-card class="my-card">
+          <q-img src="~assets/screenshot.jpg" style="width: 600px"/>
+
+          <q-card-section>
+            <q-btn
+              fab
+              color="primary"
+              icon="place"
+              class="absolute"
+              style="top: 0; right: 12px; transform: translateY(-50%);"
+            />
+
+            <div class="row no-wrap items-center">
+              <div class="col text-h6 ellipsis">
+                Screenshot
+              </div>
+              <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
+                <q-icon name="place" />
+                250 ft
+              </div>
+            </div>
+
+            <q-rating :max="5" size="32px" />
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <div class="text-subtitle1">
+              $・Italian, Cafe
+            </div>
+            <div class="text-caption text-grey">
+              Small plates, salads & sandwiches in an intimate setting.
+            </div>
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-actions align="right">
+            <q-btn v-close-popup flat color="primary" label="Reserve" />
+            <q-btn v-close-popup flat color="primary" round icon="event" />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
       <div class="text-h6 text-grey-8">
         Cameras
       </div>
@@ -9,11 +54,14 @@
     <q-card-section class="q-pa-none">
       <q-table grid :data="data" :columns="columns" hide-bottom>
         <template v-slot:top-right>
-          <q-btn side label="Add camera" color="primary"></q-btn>
+          <q-btn side label="Add camera" @click="card=true" icon="add_to_photos" color="primary"></q-btn>
+
+          <q-btn side label="Delete all"  icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <card-profile :avatar="props.row.avatar" :name="props.row.name" :des="props.row.des"></card-profile>
+            <card-profile :avatar="props.row.avatar" :name="props.row.name" :des="props.row.des" :id="props.row.id">
+            </card-profile>
           </div>
         </template>
       </q-table>
@@ -36,6 +84,7 @@ export default {
       ],
       data: [
         {
+          id: 12,
           name: 'Pratik Patel',
           Crated_Date: '15/3/2020',
           Project: 'Quasar Admin',
@@ -76,6 +125,17 @@ export default {
           des: 'Solutions Developer'
         },
       ],
+      card: false,
+
+      slide: 1,
+      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
+
+      stars: 3,
+    }
+  },
+  methods: {
+    deleteCam(id){
+      return ;
     }
   }
 }
