@@ -93,38 +93,8 @@ export default {
         }
       ],
 
-      data: [
-        {
-          Time: '15/3/2021',
-          Camera_number: '#1',
-          Content: "zdd大傻子",
-          Result: "handled"
-        },
-        {
-          Time: '15/4/2020',
-          Camera_number: '#1',
-          Content: "xxx",
-          Result: "unhandled"
-        },
-        {
-          Time: '15/3/2020',
-          Camera_number: '#1',
-          Content: "zdd大傻子",
-          Result: "handled"
-        },
-        {
-          Time: '15/3/2020',
-          Camera_number: 1,
-          Content: "zdd大傻子",
-          Result: "unhandled"
-        },
-        {
-          Time: '15/3/2020',
-          Camera_number: '#1',
-          Content: "zdd大傻子",
-          Result: "unhandled"
-        },
-      ],
+      data: [],
+
       columns: [
         {name: 'Time', label: 'Time', field: 'Time', sortable: true, align: 'center'},
         {name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
@@ -132,7 +102,6 @@ export default {
         {name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
         {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
       ],
-      filter: {value: 'none'},
     }
   },
 
