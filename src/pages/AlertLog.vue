@@ -1,51 +1,9 @@
 <template>
   <div>
   <q-card>
-    <q-card-section>
-      <div class="text-h6 text-grey-8">
-        Alert Log
-        <!--
-        <q-btn label="Export" class="float-right text-capitalize text-indigo-8 shadow-3" icon="person"/>
-        -->
-        <br>
-        <q-toggle
-          v-for="(option, index) in foptions"
-          :key="index"
-          v-model="option.value"
-          :label="option.label"
-          :color="option.color"
-          :keep-color="option.keepColor"
-          @input="toggleFilter(index)"
-        ></q-toggle>
-
-      </div>
-
-      <div>
-        <q-btn label="reset filter" color="primary" @click="resetFilter"></q-btn>
-      </div>
-    </q-card-section>
-
     <q-card-section class="q-pa-none">
       <q-table :data="data"
-               :columns="columns" hide-bottom
-               :filter="filter"
-               :filter-method="myfilterMethod">
-
-        <template v-slot:body-cell-Name="props">
-          <q-td :props="props">
-            <q-item style="max-width: 420px">
-              <q-item-section avatar>
-                <q-avatar>
-                  <img :src="props.row.avatar">
-                </q-avatar>
-              </q-item-section>
-
-              <q-item-section>
-                <q-item-label>{{ props.row.name }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-td>
-        </template>
+               :columns="columns">
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
             <q-btn icon="image" size="md" @click="card = true" flat dense/>
@@ -184,6 +142,7 @@ export default {
         //console.log(response)
         let res = response.data
         console.log(res)
+        let realData = []
         for (let i=0; i < res.length; i++) {
           console.log("i:"+i);
           const elem = res[i];
@@ -194,8 +153,8 @@ export default {
           a.Content = elem.attachment;
           a.Result = elem.info;
           // ···
-          this.data.push(a);
-          this.$forceUpdate();
+          realData.push(a);
+          this.data = realData;
         }
         console.log('data', this.data)
       }).catch( (error) => {
@@ -206,46 +165,8 @@ export default {
       })
     })
   },
-    methods:
-    {
-
-
-      toggleFilter(index)
-      {
-        if (index === 0 && this.foptions[0].value) {
-          this.foptions[1].value = false
-          this.filter.value = 'unhandled'
-          return
-        } else {
-          this.filter.value = 'none'
-        }
-
-        if (index === 1 && this.foptions[1].value) {
-          this.foptions[0].value = false
-          this.filter.value = 'handled'
-          return
-        } else {
-          this.filter.value = 'none'
-        }
-      },
-      resetFilter()
-      {
-        this.foptions.forEach(option => option.value = false)
-        this.filter.value = 'none'
-      },
-      myfilterMethod()
-      {
-        if (this.data.length > 2) {
-          if (this.filter.value === 'unhandled') {
-            return this.data.filter(row => (row.Result === 'unhandled'))
-          }
-          if (this.filter.value === 'handled') {
-            return this.data.filter(row => (row.Result === 'handled'))
-          }
-          return this.data
-        }
-      }
-    }
+  methods: {
+  }
 }
 </script>
 
