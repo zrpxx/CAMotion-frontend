@@ -81,7 +81,7 @@
                 </q-item-section>
 
                 <q-item-section side>
-                  <q-btn  icon="email" style="color:cornflowerblue"> </q-btn>
+                  <q-btn  icon="email" style="color:cornflowerblue" @click="change_msg_status(msg.id,true)"> </q-btn>
                   {{ msg.time }}
                 </q-item-section>
               </q-item>
@@ -312,9 +312,9 @@ export default {
       tab: "message",
       messages: [
         {
+          id:'',
           info: "",
-          uid: '',
-          status: ''
+          uid: ''
         }
       ],
       contacts: [
@@ -437,6 +437,34 @@ export default {
     })
   },
   methods: {
+    change_msg_status(id, status) {
+      this.$axios.post('http://camotion.zrp.cool:8000/change_report_status/?repo_id='+id+'&status='+status, {
+        'repo_id': id,
+        'status': status
+      }).then( (response) => {
+        console.log(response)
+        let res = response.data
+        if(res.status === 'Success') {
+          this.$q.notify({
+            message: 'handled',
+            color: 'primary'
+          })
+          this.$router.go(0)
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch( (error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
     getColor(val) {
       if (val > 70 && val <= 100) {
         return "green";
