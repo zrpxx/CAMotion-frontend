@@ -68,7 +68,7 @@
 
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="message" class="q-pa-sm">
-              <q-item v-for="msg in messages" :key="msg.uid" clickable v-ripple>
+              <q-item v-for="msg in messages" :key="msg.uid" clickable v-ripple @click="alert(msg.info)">
                 <q-item-section avatar>
                   <q-img src="~assets/profile.svg"> </q-img>
                 </q-item-section>
@@ -437,6 +437,19 @@ export default {
     })
   },
   methods: {
+    alert (aa) {
+
+  this.$q.dialog({
+    title: 'Message',
+    message: aa
+  }).onOk(() => {
+    // console.log('OK')
+  }).onCancel(() => {
+    // console.log('Cancel')
+  }).onDismiss(() => {
+    // console.log('I am triggered on both OK and Cancel')
+  })
+},
     change_msg_status(id, status) {
       this.$axios.post('http://camotion.zrp.cool:8000/change_report_status/?repo_id='+id+'&status='+status, {
         'repo_id': id,
