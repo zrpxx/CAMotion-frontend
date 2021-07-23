@@ -52,18 +52,24 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center ">
-        <div class="text-h6  text-grey-8">
+        <div class="text-id  text-grey-8">
+          camera id: {{ id }}
+        </div>
+        <div class="text-h6 text-grey-8" style="color: #1e88e5">
           {{ name }}
         </div>
-        <div class="text-caption text-grey-8">
-          {{ des }}
+        <div class="text-url text-grey-8">
+          url: {{ url }}
+        </div>
+        <div class="text-url text-grey-8">
+          status: {{ working }}
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
         <q-btn flat round icon="search" class="bg-indigo-7 text-white" @click="click()" />
         <q-btn flat round icon="notifications" class="bg-info text-white" @click="card=true"/>
-        <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="deleteCam()" />
+        <q-btn flat round icon="delete" class="bg-indigo-8 text-white"/>
       </q-card-actions>
     </q-card>
   </div>
@@ -72,39 +78,11 @@
 <script>
 export default {
   name: "CardProfile",
-  props: ['avatar', 'name', 'des', 'cam_id'],
+  props: ['avatar', 'name', 'url', 'id', 'working'],
   methods: {
     click() {
       console.log('click')
       this.card = true
-    },
-
-    deleteCam() {
-      this.$axios.post('http://camotion.zrp.cool:8000/delete_camera', {
-        "id": sessionStorage.getItem('user_id'),
-        "cid": this.cam_id
-      }).then( (response) => {
-        console.log(response)
-        let res = response.data
-        if(res.status === 'Success') {
-          this.$q.notify({
-            type: 'positive',
-            message: '删除成功'
-          })
-        } else {
-          //console.log(res.message)
-          this.$q.notify({
-            type: 'warning',
-            message: res.message
-          })
-        }
-      }).catch( (error) => {
-        console.log(error)
-        this.$q.notify({
-          type: 'negative',
-          message: 'Internal error.'
-        })
-      })
     }
   },
 
@@ -118,7 +96,6 @@ export default {
       stars: 3,
     }
   }
-
 }
 </script>
 
