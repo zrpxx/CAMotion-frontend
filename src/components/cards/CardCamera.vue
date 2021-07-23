@@ -69,7 +69,7 @@
       <q-card-actions align="center">
         <q-btn flat round icon="search" class="bg-indigo-7 text-white" @click="click()" />
         <q-btn flat round icon="notifications" class="bg-info text-white" @click="card=true"/>
-        <q-btn flat round icon="delete" class="bg-indigo-8 text-white"/>
+        <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="deleteCam()"/>
       </q-card-actions>
     </q-card>
   </div>
@@ -78,8 +78,35 @@
 <script>
 export default {
   name: "CardProfile",
-  props: ['avatar', 'name', 'url', 'id', 'working'],
+  props: ['avatar', 'name', 'url', 'cam_id', 'working'],
   methods: {
+    deleteCam(){
+      this.$axios.post('http://camotion.zrp.cool:8000/delete_camera', {
+        "id": sessionStorage.getItem("user_id"),
+        "cid":this.cam_id
+      }).then((response) => {
+        console.log(response)
+        let res = response.data
+        if (res.status === 'Success') {
+          this.$q.notify({
+            type: 'positive',
+            message: 'Delete Successfully!'
+          })
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
     click() {
       console.log('click')
       this.card = true
