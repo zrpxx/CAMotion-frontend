@@ -110,22 +110,6 @@
 <script>
 
 export default {
-  setup () {
-    return {
-      carousel: ref(false),
-      card: ref(false),
-      sliders: ref(false),
-
-      slide: ref(1),
-      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
-
-      stars: ref(3),
-
-      slideVol: ref(39),
-      slideAlarm: ref(56),
-      slideVibration: ref(63)
-    }
-  },
   name: "TableActions",
   data() {
     return {
@@ -187,7 +171,7 @@ export default {
         {name: 'Time', label: 'Time', field: 'Time', sortable: true, align: 'center'},
         {name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
         {name: 'Content', label: 'Content', field: 'Content', sortable: false, align: 'center'},
-        {name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center'},
+        {name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
         {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
       ],
       filter: {value: 'none'},

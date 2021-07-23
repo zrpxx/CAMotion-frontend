@@ -14,8 +14,8 @@
 
           </q-card-section>
           <q-card-section class="text-center">
-            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="user_role = 'vip'"> 购买会员 </q-btn>
-            <q-btn class="text-capitalize" color = "primary" v-else @click="user_role = 'User'"> 取消会员 </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'"> 购买会员 </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'Vip'" > 取消会员 </q-btn>
           </q-card-section>
         </q-card>
       </div>
