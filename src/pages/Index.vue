@@ -92,8 +92,6 @@
           <q-card-section class="text-h6 q-pa-sm">
             <div class="text-h6">用户反馈</div>
           </q-card-section>
-
-
             <div class="q-pa-md" style="max-width: 1000px;max-height: 500px">
               <q-input
                 v-model="reportText"
@@ -104,7 +102,7 @@
 
 
           <q-card-actions align="center">
-            <q-btn class="text-capitalize" @click = "send()"> 提交 </q-btn>
+            <q-btn class="text-capitalize" @click = "user_suggestion()" > 提交 </q-btn>
           </q-card-actions>
 
         </q-card>
@@ -149,9 +147,6 @@ export default {
       }
     }
   },
-  modify(){
-
-  },
   created() {
     if(sessionStorage.getItem('user_id') === undefined || sessionStorage.getItem('user_id') === null)
     {
@@ -194,6 +189,38 @@ export default {
   }
   ,
   methods: {
+    user_suggestion(){
+      console.log(this.reportText)
+      this.$axios.post('http://camotion.zrp.cool:8000/create_report', {
+        "user_id": sessionStorage.getItem("user_id"),
+        "info": this.reportText
+      }).then( (response) => {
+        console.log(response)
+        let res = response.data
+        if(res.status === 'Success') {
+          if(this.reportText!=="") {
+            this.$q.notify({
+              type: 'positive',
+              message: 'Send Successfully!'
+            })
+            this.reportText=""
+          }
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch( (error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
+
     change_password() {
       if(this.password_dict.new_password===this.password_dict.con_new_password) {
         this.$axios.post('http://camotion.zrp.cool:8000/modify_password', {
@@ -232,20 +259,6 @@ export default {
     change_alert() {
 
     },
-  send(){
-      if(this.reportText!=="") {
-        this.$q.notify({
-          type: 'positive',
-          message: '发送成功'
-        })
-      }else{
-        this.$q.notify({
-          type: 'warning',
-          message: '不能发送空白信息'
-        })
-      }
-      this.reportText = ''
-  },
   buy_vip(){
     this.$axios.post('http://camotion.zrp.cool:8000/buy_vip', {
       'user_id': this.user_id
