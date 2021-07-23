@@ -68,7 +68,7 @@
 
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="message" class="q-pa-sm">
-              <q-item v-for="msg in messages" :key="msg.id" clickable v-ripple>
+              <q-item v-for="msg in receiveMesage()" :key="msg.id" clickable v-ripple>
                 <q-item-section avatar>
                   <q-avatar>
                     <img :src="msg.avatar" />
@@ -453,6 +453,30 @@ export default {
     };
   },
   methods: {
+    receiveMesage(){
+      this.$axios.get('http://camotion.zrp.cool:8000/get_undo_repo').then((response) => {
+        console.log(response)
+        let res = response.data
+        if (res.status === '1') {
+          this.$q.notify({
+            type: 'positive',
+            message: 'Handle'
+          })
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
     getColor(val) {
       if (val > 70 && val <= 100) {
         return "green";
