@@ -54,13 +54,13 @@
     <q-card-section class="q-pa-none">
       <q-table grid :data="data" :columns="columns" hide-bottom>
         <template v-slot:top-right>
-          <q-btn side label="Add camera" @click="card=true" icon="add_to_photos" color="primary"></q-btn>
+          <q-btn side label="Add camera" @click="prompt()" icon="add_to_photos" color="primary"></q-btn>
 
-          <q-btn side label="Delete all"  icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
+          <q-btn side label="Delete all" @click="delete_All()" icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.url" :cam_id="props.row.id" :working="props.working">
+            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.name" :cam_id="props.row.id" :working="props.working">
             </card-profile>
           </div>
         </template>
@@ -76,6 +76,7 @@ export default {
   components: {CardProfile},
   data() {
     return {
+      new_camera_name: '',
       columns: [
         {name: 'Id', label: 'Name', field: 'Id', sortable: true, align: 'left'},
         {name: 'Name', label: 'Crated Date', field: 'Name', sortable: true, align: 'left'},
@@ -100,9 +101,88 @@ export default {
     }
   },
   methods: {
-    deleteCam(id){
-      return ;
-    }
+
+    prompt () {
+      this.$q.dialog({
+        title: 'Add Camera',
+        message: 'Input the camera id:',
+        prompt: {
+          model: '',
+          type: 'text' // optional
+        },
+        cancel: true,
+        persistent: true
+      }).onOk(data => {
+        this.create_cam(data)
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    },
+
+   create_cam(data){
+      if(data!=="") {
+        console.log({
+          uid: sessionStorage.getItem('user_id'),
+          name: data
+        })
+        this.$axios.post('http://camotion.zrp.cool:8000/create_camera', {
+          uid: sessionStorage.getItem('user_id'),
+          name: data
+        }).then((response) => {
+          console.log(response)
+          let res = response.data
+          if (res.status === 'Success') {
+            this.$q.notify({
+              type: 'positive',
+              message: 'create Successfully!'
+            })
+          } else {
+            //console.log(res.message)
+            this.$q.notify({
+              type: 'warning',
+              message: res.message
+            })
+          }
+        }).catch((error) => {
+          console.log(error)
+          this.$q.notify({
+            type: 'negative',
+            message: 'Internal error.'
+          })
+        })
+      }else{
+        this.$q.notify({
+          type: 'warning',
+          message: 'The id is null'
+        })
+      }
+   },
+    delete_All(){
+      this.$axios.post('http://camotion.zrp.cool:8000/delete_all_cam?delete_uid='+sessionStorage.getItem('user_id')).then((response) => {
+        console.log(response)
+        let res = response.data
+        if (res.status === 'Success') {
+          this.$q.notify({
+            type: 'positive',
+            message: 'Delete Successfully!'
+          })
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
   },
   created(){
       this.$axios.get('http://camotion.zrp.cool:8000/cameras/' + sessionStorage.getItem("user_id"))
