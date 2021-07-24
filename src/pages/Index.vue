@@ -87,9 +87,9 @@
         </q-card>
 
 
-        <div class="q-mx-auto q-my-xl" style="width: 100%">
-        <q-card>
-          <q-card-section class="text-h6 q-pa-sm">
+        <div  class="q-mx-auto q-my-xl" style="width: 100%">
+        <q-card  v-if="user_role !== 'Admin'"  >
+          <q-card-section >
             <div class="text-h6">用户反馈</div>
           </q-card-section>
             <div class="q-pa-md" style="max-width: 1000px;max-height: 500px">
@@ -190,6 +190,7 @@ export default {
   }
   ,
   methods: {
+   // if(this.sessionStorage.getItem('user_id')===)
     user_suggestion(){
       if(this.reportText!=="") {
         console.log(this.reportText)

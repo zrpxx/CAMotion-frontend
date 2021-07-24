@@ -107,6 +107,8 @@ export default {
         })
       })
     },
+
+
     click() {
       console.log('click')
       this.card = true
