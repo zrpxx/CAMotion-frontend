@@ -9,7 +9,8 @@ const routes = [
       { path: 'home', component: () => import('pages/Index') },
       { path: 'cam', component:() => import('pages/Cameras')} ,
       { path: 'alert_log', component:() => import('pages/AlertLog')},
-      { path: 'admin', component:() => import('pages/Admin')}
+      { path: 'admin', component:() => import('pages/Admin')},
+      { path: 'detail', component: () => import('pages/CamDetail')}
     ]
   }
 ]
