@@ -5,37 +5,37 @@
 
 
       <q-card-section class="row">
-        <div class="col-lg-7 col-sm-12 col-xs-12 col-md-7">
+        <div class="col-lg-4 col-sm-12 col-xs-12 col-md-5">
           <div>
             <q-item>
               <q-item-section avatar class="">
                 <q-icon color="green" name="person_add" class="q-pl-md" size="24px" />
               </q-item-section>
               <q-item-section>
-                <div class="text-h6">Recent register & camera </div>
+                <div class="text-h6">Recent register</div>
               </q-item-section>
             </q-item>
-            <IEcharts style="height: 250px" :option="recent_camera" :resizable="true" />
+            <IEcharts style="height: 250px" :option="registerStatistic" :resizable="true" />
           </div>
         </div>
 
-        <div class="col-lg-5 col-sm-12 col-xs-12 col-md-5">
+        <div class="col-lg-4 col-sm-12 col-xs-12 col-md-5">
           <q-item>
             <q-item-section avatar class="">
               <q-icon color="blue" name="insights" size="44px" />
             </q-item-section>
             <q-item-section>
-              <div class="text-h6">Stactics</div>
+              <div class="text-h6">Recent added cameras</div>
             </q-item-section>
           </q-item>
           <div>
-            <IEcharts style="height: 250px" :option="registerStatistic" :resizable="true" />
+            <IEcharts style="height: 250px" :option="recent_camera" :resizable="true" />
            <!-- <IEcharts style="height: 250px" :option="alertStatistic" :resizable="true" />-->
           </div>
         </div>
 
 
-        <div class="col-lg-5 col-sm-12 col-xs-12 col-md-5">
+        <div class="col-lg-4 col-sm-12 col-xs-12 col-md-5">
           <q-item>
             <q-item-section avatar class="">
               <q-icon color="red" name="warning" class="q-pl-md" size="24px" />
@@ -52,7 +52,7 @@
     </q-card>
 
     <div class="row q-col-gutter-sm  q-py-sm">
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="col">
         <q-card>
           <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify">
             <!--<q-tab name="contact" :class="tab == 'contact' ? 'text-blue' : ''" icon="contacts" label="Contact" />-->
@@ -88,64 +88,6 @@
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
-      </div>
-
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <q-carousel animated v-model="slide" infinite height="360px" arrows transition-prev="slide-right" transition-next="slide-left">
-          <q-carousel-slide :name="1" class="q-pa-none">
-            <q-scroll-area class="fit">
-              <q-card class="my-card">
-                <img :src="require('src/assets/coding.jpeg')" />
-
-                <q-card-section>
-                  <div class="text-h6">Work with something that you like, like…</div>
-                  <div class="text-subtitle2">by John Doe</div>
-                </q-card-section>
-
-                <q-card-actions align="left">
-                  <q-btn label="Share" dense color="primary" text-color="blue" outline />
-                  <q-btn label="Learn More" dense color="primary" text-color="blue" outline />
-                </q-card-actions>
-              </q-card>
-            </q-scroll-area>
-          </q-carousel-slide>
-          <q-carousel-slide :name="2" class="q-pa-none">
-            <q-scroll-area class="fit">
-              <q-card class="my-card">
-                <img :src="require('src/assets/lookgood.jpeg')" />
-
-                <q-card-section>
-                  <div class="text-h6">Keep your schedule in the right time</div>
-                  <div class="text-subtitle2">
-                    Aenean facilisis vitae purus facilisis semper.
-                  </div>
-                </q-card-section>
-
-                <q-card-actions align="left">
-                  <q-btn label="Share" dense color="primary" text-color="blue" outline />
-                  <q-btn label="Learn More" dense color="primary" text-color="blue" outline />
-                </q-card-actions>
-              </q-card>
-            </q-scroll-area>
-          </q-carousel-slide>
-          <q-carousel-slide :name="3" class="q-pa-none">
-            <q-scroll-area class="fit">
-              <q-card class="my-card">
-                <img :src="require('src/assets/trawel.jpeg')" />
-
-                <q-card-section>
-                  <div class="text-h6">Travel everytime that you have a chance</div>
-                  <div class="text-subtitle2">Curabitur egestas consequat lorem, vel fermentum augue porta id.</div>
-                </q-card-section>
-
-                <q-card-actions align="left">
-                  <q-btn label="Share" dense color="primary" text-color="blue" outline />
-                  <q-btn label="Learn More" dense color="primary" text-color="blue" outline />
-                </q-card-actions>
-              </q-card>
-            </q-scroll-area>
-          </q-carousel-slide>
-        </q-carousel>
       </div>
     </div>
   </q-page>
@@ -316,110 +258,6 @@ export default {
           info: "",
           uid: ''
         }
-      ],
-      contacts: [
-        {
-          name: "Pratik Patel",
-          position: "Developer",
-          avatar: "https://avatars2.githubusercontent.com/u/34883558?s=400&v=4"
-        },
-        {
-          name: "Razvan Stoenescu",
-          position: "Developer",
-          avatar: "https://cdn.quasar.dev/team/razvan_stoenescu.jpeg"
-        },
-        {
-          name: "Jeff Galbraith",
-          position: "Developer",
-          avatar: "https://cdn.quasar.dev/team/jeff_galbraith.jpg"
-        },
-        {
-          name: "Brunhilde Panswick",
-          position: "Administrator",
-          avatar: "https://cdn.quasar.dev/img/avatar2.jpg"
-        },
-        {
-          name: "Winfield Stapforth",
-          position: "Administrator",
-          avatar: "https://cdn.quasar.dev/img/avatar6.jpg"
-        }
-      ],
-      sales_data: [
-        {
-          name: "Pratik Patel",
-          Progress: 70,
-          status: "Canceled",
-          stock: "14 / 30",
-          date: "23 Oct 2018",
-          avatar: "https://avatars3.githubusercontent.com/u/34883558?s=400&u=09455019882ac53dc69b23df570629fd84d37dd1&v=4",
-          product_name: "Woman Bag",
-          total: "$300,00",
-          code: "QWE123",
-          prod_img: require("src/assets/bag.jpg")
-        },
-        {
-          name: "Mayank Patel",
-          Progress: 60,
-          status: "Sent",
-          date: "11 Nov 2018",
-          stock: "25 / 70",
-          avatar: "https://avatars2.githubusercontent.com/u/27857088?s=400&u=a898efbc753d93cf4c2070a7cf3b05544b50deea&v=4",
-          product_name: "Laptop",
-          total: "$230,00",
-          code: "ABC890",
-          prod_img: require("src/assets/laptop.jpg")
-        },
-        {
-          name: "Mayur Patel",
-          Progress: 30,
-          status: "Pending",
-          stock: "35 / 50",
-          avatar: "https://avatars0.githubusercontent.com/u/55240045?s=400&u=cf9bffc2bd2d8e42ca6e5abf40ddd6c1a03ce2860&v=4",
-          product_name: "Pinapple Jam",
-          total: "$34,00",
-          date: "19 Sept 2020",
-          code: "GHI556",
-          prod_img: require("src/assets/jam.jpg")
-        },
-        {
-          name: "Jeff Galbraith",
-          Progress: 100,
-          status: "Paid",
-          stock: "18 / 33",
-          avatar: "https://avatars1.githubusercontent.com/u/10262924?s=400&u=9f601b344d597ed76581e3a6a10f3c149cb5f6dc&v=4",
-          product_name: "Action Figure",
-          total: "$208,00",
-          date: "19 Sept 2020",
-          code: "JKL345",
-          prod_img: require("src/assets/action.jpg")
-        }
-      ],
-      sales_column: [
-        {
-          name: "Products",
-          label: "Products",
-          field: "Products",
-          sortable: true,
-          align: "left"
-        },
-        { name: "Name", label: "Buyer", field: "name", sortable: true, align: "left" },
-        {
-          name: "Total",
-          label: "Total",
-          field: "total",
-          sortable: true,
-          align: "right",
-          classes: "text-bold"
-        },
-        {
-          name: "Status",
-          label: "Status",
-          field: "status",
-          sortable: true,
-          align: "left",
-          classes: "text-bold"
-        },
-        { name: "Stock", label: "Stock", field: "task", sortable: true, align: "left" }
       ]
     };
   },
@@ -442,12 +280,6 @@ export default {
   this.$q.dialog({
     title: 'Message',
     message: aa
-  }).onOk(() => {
-    // console.log('OK')
-  }).onCancel(() => {
-    // console.log('Cancel')
-  }).onDismiss(() => {
-    // console.log('I am triggered on both OK and Cancel')
   })
 },
     change_msg_status(id, status) {
@@ -485,19 +317,6 @@ export default {
         return "blue";
       }
       return "red";
-    },
-    getChipColor(status) {
-      if (status == "Canceled") {
-        return "negative";
-      } else if (status == "Sent") {
-        return "positive";
-      } else if (status == "Pending") {
-        return "warning";
-      } else if (status == "Paid") {
-        return "info";
-      } else {
-        return "dark";
-      }
     }
   }
 };
