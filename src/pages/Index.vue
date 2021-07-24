@@ -167,6 +167,7 @@ export default {
               this.user_role = 'VIP'
               break;
             case 100:
+              sessionStorage.setItem('is_admin', "true")
               this.user_role = 'Admin'
               break;
             default:
