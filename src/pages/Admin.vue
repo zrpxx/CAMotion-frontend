@@ -278,7 +278,8 @@ export default {
     alert (aa) {
 
   this.$q.dialog({
-    title: 'Message',
+    title:// this.sessionStorage.getItem('user_id'),
+         'Message',
     message: aa
   })
 },

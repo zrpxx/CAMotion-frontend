@@ -30,17 +30,42 @@
       <q-scroll-area class="fit">
         <q-list>
 
-          <template v-for="(menuItem, index) in menuList">
-            <q-item :key="index" clickable :active="menuItem.label === 'Outbox'" v-ripple :to="menuItem.to" exact>
-              <q-item-section avatar>
-                <q-icon :name="menuItem.icon" />
-              </q-item-section>
-              <q-item-section>
-                {{ menuItem.label }}
-              </q-item-section>
-            </q-item>
-            <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
-          </template>
+          <q-item clickable v-ripple to="/home" exact>
+            <q-item-section avatar>
+              <q-icon name="home" />
+            </q-item-section>
+            <q-item-section>
+            Home
+            </q-item-section>
+          </q-item>
+
+          <q-item v-if="!is_admin" clickable v-ripple to="/cam" exact>
+            <q-item-section avatar>
+              <q-icon name="camera" />
+            </q-item-section>
+            <q-item-section>
+             Cameras
+            </q-item-section>
+          </q-item>
+
+          <q-item v-if="!is_admin" clickable v-ripple to="/alert_log" exact>
+            <q-item-section avatar>
+              <q-icon name="list" />
+            </q-item-section>
+            <q-item-section>
+              Alert logs
+            </q-item-section>
+          </q-item>
+
+
+          <q-item v-if="is_admin" clickable v-ripple to="/admin" exact>
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section>
+              Administration
+            </q-item-section>
+          </q-item>
 
             <q-item clickable v-ripple @click="logout()">
               <q-item-section avatar>
@@ -72,30 +97,36 @@ export default {
         {
           icon: 'home',
           label: 'Home',
-          to: '/home'
+          to: '/home',
         },
         {
           icon: 'camera',
           label: 'Cameras',
-          to: '/cam'
+          to: '/cam',
         },
         {
           icon: 'list',
           label: 'Alert logs',
-          to: '/alert_log'
-        },
-        {
-          icon: 'dashboard',
-          label: 'Administration',
-          to: '/admin'
+          to: '/alert_log',
         }
-      ]
+      ],
+      is_admin: false
     }
+  },
+  created() {
+    this.timer = setInterval(this.judge_admin, 1000);
   },
   methods: {
     logout() {
       sessionStorage.removeItem('user_id')
+      sessionStorage.removeItem('is_admin')
       this.$router.push('/')
+    },
+    judge_admin() {
+      if(sessionStorage.getItem('is_admin') === 'true') {
+        this.is_admin = true
+      } else
+        this.is_admin = false
     }
   }
 }
