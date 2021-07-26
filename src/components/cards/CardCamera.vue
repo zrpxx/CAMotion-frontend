@@ -2,45 +2,26 @@
   <div>
     <q-dialog v-model="card">
       <q-card class="my-card">
-        <q-img src="~assets/screenshot.jpg" style="width: 600px"/>
-
-        <q-card-section>
-          <q-btn
+         <q-table :data="data"
+                  :columns="columns">
+           <template v-slot:body-cell-Action="props">
+             <q-td :props="props">
+               <q-btn icon="image" size="md" @click="screenshot = props.row.image, pic = true" flat dense/>
+             </q-td>
+           </template>
+          </q-table>
+          <!--<q-btn
             fab
             color="primary"
             icon="place"
             class="absolute"
             style="top: 0; right: 12px; transform: translateY(-50%);"
-          />
+          />-->
 
-          <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">
-              Screenshot
-            </div>
-            <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-              <q-icon name="place" />
-              250 ft
-            </div>
-          </div>
-
-          <q-rating :max="5" size="32px" />
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <div class="text-subtitle1">
-            $・Italian, Cafe
-          </div>
-          <div class="text-caption text-grey">
-            Small plates, salads & sandwiches in an intimate setting.
-          </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-actions align="right">
+        <!--<q-card-actions align="right">
           <q-btn v-close-popup flat color="primary" label="Reserve" />
           <q-btn v-close-popup flat color="primary" round icon="event" />
-        </q-card-actions>
+        </q-card-actions>-->
       </q-card>
     </q-dialog>
     <q-card>
@@ -75,10 +56,53 @@
             }
           }
         )"/>
-        <q-btn flat round icon="notifications" class="bg-info text-white" @click="card=true"/>
+        <q-btn flat round icon="notifications" class="bg-info text-white" @click="get_log(),card=true"/>
         <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="deleteCam()"/>
       </q-card-actions>
     </q-card>
+
+    <q-dialog v-model="pic">
+      <q-card class="my-card">
+        <q-img :src="screenshot" style="width: 600px"/>  <!--变量无法访问    -->
+
+        <q-card-section>
+          <q-btn
+            fab
+            color="primary"
+            icon="place"
+            class="absolute"
+            style="top: 0; right: 12px; transform: translateY(-50%);"
+          />
+
+          <div class="row no-wrap items-center">
+            <div class="col text-h6 ellipsis">
+              Screenshot
+            </div>
+          </div>
+
+          <q-rating v-model="stars" :max="5" size="32px" />
+        </q-card-section>
+        <!--
+                <q-card-section class="q-pt-none">
+                  <div class="text-subtitle1">
+                    $・Italian, Cafe
+                  </div>
+                  <div class="text-caption text-grey">
+                    Small plates, salads & sandwiches in an intimate setting.
+                  </div>
+                </q-card-section>
+        -->
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <!--
+          <q-btn v-close-popup flat color="primary" label="Reserve" />
+          <q-btn v-close-popup flat color="primary" round icon="event" />
+          -->
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -86,7 +110,41 @@
 export default {
   name: "CardProfile",
   props: ['avatar', 'name', 'url', 'cam_id', 'working'],
+  created(){
+
+  },
   methods: {
+    get_log(){
+
+      this.$axios.get('http://camotion.zrp.cool:8000/get_camera_log/' + this.cam_id)
+        .then( (response) => {
+          console.log(response)
+          let res = response.data
+          console.log(res)
+          let realData = []
+          for (let i=0; i < res.length; i++) {
+            console.log("i:"+i);
+            const elem = res[i];
+            let a = {};
+            a.id = elem.id;
+            a.Time = elem.time;
+            console.log("time:"+elem.time);
+            a.Content = elem.info;
+            a.image = elem.attachment;
+            //a.Result = elem.info;
+            // ···
+            realData.push(a);
+            this.data = realData;
+          }
+          console.log('data', this.data)
+        }).catch( (error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
     deleteCam(){
       this.$axios.post('http://camotion.zrp.cool:8000/delete_camera', {
         "id": sessionStorage.getItem("user_id"),
@@ -115,7 +173,6 @@ export default {
       })
     },
 
-
     click() {
       console.log('click')
       this.card = true
@@ -130,6 +187,15 @@ export default {
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
 
       stars: 3,
+      columns: [
+        // {name: 'Id', label: 'Id', field: 'id', sortable: true, align: 'center'},
+        {name: 'Time', label: 'Time', field: 'Time', sortable: true, align: 'center'},
+        //{name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
+        {name: 'Content', label: 'Content', field: 'Content', sortable: false, align: 'center'},
+        //{name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
+        {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
+      ],
+      data:[]
     }
   }
 }

@@ -60,7 +60,7 @@
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.name" :cam_id="props.row.id" :working="props.working">
+            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.name" :cam_id="props.row.id" :working="props.row.working">
             </card-profile>
           </div>
         </template>
@@ -78,20 +78,12 @@ export default {
     return {
       new_camera_name: '',
       columns: [
-        {name: 'Id', label: 'Name', field: 'Id', sortable: true, align: 'left'},
-        {name: 'Name', label: 'Crated Date', field: 'Name', sortable: true, align: 'left'},
-        {name: 'Url', label: 'Project', field: 'Url', sortable: true, align: 'left'},
-        {name: 'working', label: '', field: 'Working', sortable: false, align: 'center'}
+        {name: 'Id', label: 'Name', field: 'id', sortable: true, align: 'left'},
+        {name: 'Name', label: 'Crated Date', field: 'name', sortable: true, align: 'left'},
+        {name: 'Url', label: 'Project', field: 'url', sortable: true, align: 'left'},
+        {name: 'working', label: '', field: 'working', sortable: false, align: 'center'}
       ],
-      data: [
-        {
-          Id: '',
-          Name: '',
-          Url: '',
-          working: '',
-          avatar: '',
-        }
-      ],
+      data: [],
       card: false,
 
       slide: 1,
@@ -190,6 +182,7 @@ export default {
         console.log(response)
         let res = response.data
         this.data = res
+          console.log("data", this.data)
       }).catch( (error) => {
         console.log(error)
         this.$q.notify({
