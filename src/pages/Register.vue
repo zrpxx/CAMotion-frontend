@@ -66,7 +66,11 @@
               let res = response.data
               if(res.status === 'Success') {
                 sessionStorage.setItem('user_id', res.user_id)
-                this.$router.push('/home')
+                this.$q.notify({
+                  type: 'positive',
+                  message: 'registered successfully'
+                })
+                this.$router.push('/')
               } else {
                 //console.log(res.message)
                 this.$q.notify({
@@ -83,7 +87,7 @@
             })
 
           }
-        }
+         }
     }
 </script>
 

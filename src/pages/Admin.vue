@@ -139,7 +139,7 @@ export default {
           {
             name: "Camera add",
             type: "bar",
-            data: [4, 2, 8, 9, 1, 4, 6],
+            data: [],
             color: "#336c1a"
           }
         ]
@@ -177,7 +177,7 @@ export default {
           {
             name: "Register",
             type: "line",
-            data: [40, 45, 27, 50, 32, 50, 70],
+            data: [],
             color: "#546bfa"
           },
 
@@ -216,7 +216,7 @@ export default {
           {
             name: "Alert raised",
             type: "bar",
-            data: [2, 3, 2, 0, 1, 5, 3],
+            data: [],
             color: "#f11146"
           }
         ]
@@ -273,8 +273,24 @@ export default {
         message: 'Internal error.'
       })
     })
+    this.get_cam_num()
   },
   methods: {
+    get_cam_num() {
+      this.$axios.get('http://camotion.zrp.cool:8000/get_dashboard_info' ).then((response) => {
+        console.log(response)
+        let res = response.data
+        this.recent_camera.series[0].data=res.recent_cam_add.reverse()
+        this.registerStatistic.series[0].data=res.recent_register.reverse()
+        this.alertStatistic.series[0].data=res.recent_alert.reverse()
+      }).catch((error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
     alert (aa) {
 
   this.$q.dialog({
