@@ -6,7 +6,7 @@
                   :columns="columns">
            <template v-slot:body-cell-Action="props">
              <q-td :props="props">
-               <q-btn icon="image" size="md" @click="screenshot = props.row.image, pic = true" flat dense/>
+               <q-btn icon="image" size="md" @click="screenshot = props.row.image, pic = true, card = false" flat dense/>
              </q-td>
            </template>
           </q-table>
@@ -72,6 +72,7 @@
             icon="place"
             class="absolute"
             style="top: 0; right: 12px; transform: translateY(-50%);"
+            v-close-popup
           />
 
           <div class="row no-wrap items-center">
@@ -79,28 +80,7 @@
               Screenshot
             </div>
           </div>
-
-          <q-rating v-model="stars" :max="5" size="32px" />
         </q-card-section>
-        <!--
-                <q-card-section class="q-pt-none">
-                  <div class="text-subtitle1">
-                    $・Italian, Cafe
-                  </div>
-                  <div class="text-caption text-grey">
-                    Small plates, salads & sandwiches in an intimate setting.
-                  </div>
-                </q-card-section>
-        -->
-
-        <q-separator />
-
-        <q-card-actions align="right">
-          <!--
-          <q-btn v-close-popup flat color="primary" label="Reserve" />
-          <q-btn v-close-popup flat color="primary" round icon="event" />
-          -->
-        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -182,6 +162,7 @@ export default {
   data(){
     return {
       card: false,
+      pic: false,
 
       slide: 1,
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
