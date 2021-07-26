@@ -35,13 +35,8 @@
             <div class="col text-h6 ellipsis">
               Screenshot
             </div>
-            <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-              <q-icon name="place" />
-              250 ft
-            </div>
           </div>
 
-          <q-rating v-model="stars" :max="5" size="32px" />
         </q-card-section>
 <!--
         <q-card-section class="q-pt-none">

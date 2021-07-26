@@ -34,10 +34,10 @@
 
       <q-card-section class="q-pt-none text-center ">
         <div class="text-id  text-grey-8">
-          camera id: {{ id }}
+          camera id: {{ cam_id }}
         </div>
         <div class="text-h6 text-grey-8" style="color: #1e88e5">
-          {{ name }}
+          name: {{ name }}
         </div>
         <div class="text-url text-grey-8">
           url: {{ url }}
