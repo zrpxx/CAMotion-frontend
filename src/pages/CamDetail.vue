@@ -16,9 +16,10 @@
       }
     },
     mounted() {
-      if(this.$route.params.url)
+      if(this.$route.params.url !== undefined)
       {
-        this.flv_url = url
+        this.flv_url = this.$route.params.url
+        console.log(this.flv_url)
       }
       if (flvjs.isSupported()) {
         var videoElement = document.getElementById('videoElement');
@@ -27,7 +28,7 @@
           isLive: true,
           hasAudio: false,
           cors: true,
-          url: 'http://zrp.cool:7001/live/dev_test.flv'
+          url: this.flv_url
         });
         this.flvPlayer.attachMediaElement(videoElement);
         this.flvPlayer.load();

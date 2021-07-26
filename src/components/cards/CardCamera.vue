@@ -67,7 +67,14 @@
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat round icon="search" class="bg-indigo-7 text-white" @click="click()" />
+        <q-btn flat round icon="search" class="bg-indigo-7 text-white" @click= "$router.push(
+          {
+            name: 'cam_detail',
+            params: {
+              url: 'http://zrp.cool:7001/live/dev_test.flv'
+            }
+          }
+        )"/>
         <q-btn flat round icon="notifications" class="bg-info text-white" @click="card=true"/>
         <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="deleteCam()"/>
       </q-card-actions>

@@ -79,7 +79,6 @@
                   <q-item-label class="text-subtitle1"> {{ msg.uid }}</q-item-label>
                   <q-item-label caption lines="1">{{ msg.info }}</q-item-label>
                 </q-item-section>
-
                 <q-item-section side>
                   <q-btn  icon="email" style="color:cornflowerblue" @click="change_msg_status(msg.id,true)"> </q-btn>
                   {{ msg.time }}
@@ -307,13 +306,12 @@ export default {
       })
     },
     alert (aa) {
-
-  this.$q.dialog({
-    title:// this.sessionStorage.getItem('user_id'),
+       this.$q.dialog({
+        title:// this.sessionStorage.getItem('user_id'),
          'Message',
-    message: aa
-  })
-},
+        message: aa
+       })
+     },
     change_msg_status(id, status) {
       this.$axios.post('http://camotion.zrp.cool:8000/change_report_status/?repo_id='+id+'&status='+status, {
         'repo_id': id,
