@@ -14,7 +14,7 @@
 
           </q-card-section>
           <q-card-section class="text-center">
-            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'"> 购买会员 </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="buy_vip()"> 购买会员 </q-btn>
             <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'Vip'" > 取消会员 </q-btn>
           </q-card-section>
         </q-card>
@@ -268,14 +268,14 @@ export default {
     change_alert() {
 
     },
-  buy_vip(){
-    this.$axios.post('http://camotion.zrp.cool:8000/buy_vip', {
-      'user_id': this.user_id
+    buy_vip(){
+    this.$axios.post('http://camotion.zrp.cool:8000/buy_vip/?user_id='+sessionStorage.getItem("user_id"), {
+      'user_id': sessionStorage.getItem("user_id")
     }).then( (response) => {
       console.log(response)
       let res = response.data
       if(res.status === 'Success') {
-        this.user_role = res.role
+        this.user_role = (res.role==='1')? 'Vip':'User'
       } else {
         //console.log(res.message)
         this.$q.notify({
