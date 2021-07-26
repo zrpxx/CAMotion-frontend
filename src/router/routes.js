@@ -10,7 +10,9 @@ const routes = [
       { path: 'cam', component:() => import('pages/Cameras')} ,
       { path: 'alert_log', component:() => import('pages/AlertLog')},
       { path: 'admin', component:() => import('pages/Admin')},
-      { path: 'detail', component: () => import('pages/CamDetail')}
+      { name: 'cam_detail',
+        path: 'detail',
+        component: () => import('pages/CamDetail')}
     ]
   }
 ]

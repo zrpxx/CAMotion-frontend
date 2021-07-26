@@ -3,7 +3,6 @@
   <div>
     <video id="videoElement" controls autoplay muted width="100%" height="100%">
     </video>
-    <button @click="play">播放</button>
   </div>
 </template>
 
@@ -12,10 +11,15 @@
   export default {
     data () {
       return {
-        flvPlayer:null
+        flvPlayer:null,
+        flv_url: ''
       }
     },
     mounted() {
+      if(this.$route.params.url)
+      {
+        this.flv_url = url
+      }
       if (flvjs.isSupported()) {
         var videoElement = document.getElementById('videoElement');
         this.flvPlayer = flvjs.createPlayer({
@@ -37,9 +41,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .bg-image {
-      background-image: linear-gradient(30deg, #7028e4 0%, #e5b2ca 60%);
-  }
-</style>
