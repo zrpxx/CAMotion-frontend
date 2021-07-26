@@ -82,7 +82,24 @@
             />
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize">Save settings</q-btn>
+            <q-btn class="text-capitalize" @click="jude_email()">Save settings</q-btn>
+            <q-dialog v-model="prompt" persistent>
+              <q-card style="min-width: 350px">
+                <q-card-section>
+                  <div class="text-h6">Your e-mail address</div>
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                  <q-input dense v-model="address" autofocus @keyup.enter="prompt = false" />
+                </q-card-section>
+
+                <q-card-actions align="right" class="text-primary">
+                  <q-btn flat label="Cancel" v-close-popup />
+                  <q-btn flat label="Add address" v-close-popup />
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
+
           </q-card-actions>
         </q-card>
 
@@ -118,6 +135,16 @@ export default {
   name: "UserProfile",
   data() {
     return {
+
+
+        alert: false,
+        confirm: false,
+        prompt: false,
+
+        address: '',
+
+
+
       username: 'A1',
       user_role: 'Vip',
       reportText: '',
@@ -134,10 +161,6 @@ export default {
           label: '电子邮件',
           value: 'e-mail'
         },
-        {
-          label: '短信',
-          value: 'sms'
-        }
       ],
       user_details: {},
       password_dict: {
@@ -191,6 +214,21 @@ export default {
   ,
   methods: {
    // if(this.sessionStorage.getItem('user_id')===)
+
+    jude_email(){
+      var a=this.warning_option.indexOf('e-mail');
+     if(a!==-1){
+       this.prompt=true
+      }
+     if(this.warning_option.length===0){
+       this.$q.notify({
+         type: 'warning',
+         message: '选项不能为空'
+       })
+     }
+
+    },
+
     user_suggestion(){
       if(this.reportText!=="") {
         console.log(this.reportText)
