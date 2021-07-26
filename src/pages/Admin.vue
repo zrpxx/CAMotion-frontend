@@ -123,7 +123,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["7.19", "7.20", "7.21", "7.22", "7.23", "7.24" ,"7.25"]
+            data: [this.getDay(-6),this.getDay(-5),this.getDay(-4),
+              this.getDay(-3),this.getDay(-2),this.getDay(-1),this.getDay(0)]
           }
         ],
         yAxis: [
@@ -162,7 +163,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["7.19", "7.20", "7.21", "7.22", "7.23", "7.24" ,"7.25"]
+            data: [this.getDay(-6),this.getDay(-5),this.getDay(-4),
+              this.getDay(-3),this.getDay(-2),this.getDay(-1),this.getDay(0)]
           }
         ],
         yAxis: [
@@ -201,7 +203,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["7.19", "7.20", "7.21", "7.22", "7.23", "7.24" ,"7.25"]
+            data: [this.getDay(-6),this.getDay(-5),this.getDay(-4),
+              this.getDay(-3),this.getDay(-2),this.getDay(-1),this.getDay(0)]
           }
         ],
         yAxis: [
@@ -275,7 +278,19 @@ export default {
     })
     this.get_cam_num()
   },
+
+
   methods: {
+
+    getDay(day){
+      var today = new Date();
+      var targetday_milliseconds=today.getTime() + 1000*60*60*24*day;
+      today.setTime(targetday_milliseconds); //注意，这行是关键代码
+
+      var tDate = today.getDate();
+      return tDate;
+    },
+
     get_cam_num() {
       this.$axios.get('http://camotion.zrp.cool:8000/get_dashboard_info' ).then((response) => {
         console.log(response)
