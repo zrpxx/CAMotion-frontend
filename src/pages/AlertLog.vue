@@ -6,7 +6,7 @@
                :columns="columns">
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
-            <q-btn icon="image" size="md" @click="card = true" flat dense/>
+            <q-btn icon="image" size="md" @click="image = props.row.image,card = true" flat dense/>
             <q-btn icon="check" size="md" color="red" class="q-ml-sm" v-if="props.row.Result === 'unhandled'" @click = "props.row.Result = 'handled'" flat dense/>
             <q-btn icon="cancel" size="md" class="q-ml-sm" v-if="props.row.Result === 'handled'" @click = "props.row.Result = 'unhandled'" flat dense/>
 
@@ -20,7 +20,7 @@
 
     <q-dialog v-model="card">
       <q-card class="my-card">
-        <q-img src="~assets/screenshot.jpg" style="width: 600px"/>
+        <q-img :src="image" style="width: 600px"/>  <!--变量无法访问    -->
 
         <q-card-section>
           <q-btn
@@ -43,7 +43,7 @@
 
           <q-rating v-model="stars" :max="5" size="32px" />
         </q-card-section>
-
+<!--
         <q-card-section class="q-pt-none">
           <div class="text-subtitle1">
             $・Italian, Cafe
@@ -52,12 +52,15 @@
             Small plates, salads & sandwiches in an intimate setting.
           </div>
         </q-card-section>
+-->
 
         <q-separator />
 
         <q-card-actions align="right">
+          <!--
           <q-btn v-close-popup flat color="primary" label="Reserve" />
           <q-btn v-close-popup flat color="primary" round icon="event" />
+          -->
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -94,12 +97,14 @@ export default {
       ],
 
       data: [],
+      image: '',
 
       columns: [
+       // {name: 'Id', label: 'Id', field: 'id', sortable: true, align: 'center'},
         {name: 'Time', label: 'Time', field: 'Time', sortable: true, align: 'center'},
         {name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
         {name: 'Content', label: 'Content', field: 'Content', sortable: false, align: 'center'},
-        {name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
+        //{name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
         {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
       ],
     }
@@ -116,11 +121,13 @@ export default {
           console.log("i:"+i);
           const elem = res[i];
           let a = {};
+          a.id = elem.id;
           a.Time = elem.time;
           console.log("time:"+elem.time);
           a.Camera_number = elem.id;
-          a.Content = elem.attachment;
-          a.Result = elem.info;
+          a.Content = elem.info;
+          a.image = elem.attachment;
+          //a.Result = elem.info;
           // ···
           realData.push(a);
           this.data = realData;
