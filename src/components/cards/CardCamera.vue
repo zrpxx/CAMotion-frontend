@@ -6,7 +6,7 @@
                   :columns="columns">
            <template v-slot:body-cell-Action="props">
              <q-td :props="props">
-               <q-btn icon="image" size="md" @click="screenshot = props.row.image, pic = true, card = false" flat dense/>
+               <q-btn icon="image" size="md" @click="screenshot = props.row.image, pic = true" flat dense/>
              </q-td>
            </template>
           </q-table>
@@ -28,7 +28,7 @@
 
       <q-card-section class="text-center">
         <q-avatar size="100px" class="shadow-10">
-          <img :src="avatar">
+          <img src="~assets/camera.jpg">
         </q-avatar>
       </q-card-section>
 
@@ -52,7 +52,7 @@
           {
             name: 'cam_detail',
             params: {
-              url: 'http://zrp.cool:7001/live/dev_test.flv'
+              url: url
             }
           }
         )"/>
@@ -66,6 +66,7 @@
         <q-img :src="screenshot" style="width: 600px"/>  <!--变量无法访问    -->
 
         <q-card-section>
+          <!--
           <q-btn
             fab
             color="primary"
@@ -74,6 +75,7 @@
             style="top: 0; right: 12px; transform: translateY(-50%);"
             v-close-popup
           />
+          -->
 
           <div class="row no-wrap items-center">
             <div class="col text-h6 ellipsis">

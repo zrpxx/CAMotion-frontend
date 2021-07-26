@@ -28,21 +28,9 @@
             <q-rating :max="5" size="32px" />
           </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            <div class="text-subtitle1">
-              $・Italian, Cafe
-            </div>
-            <div class="text-caption text-grey">
-              Small plates, salads & sandwiches in an intimate setting.
-            </div>
-          </q-card-section>
 
           <q-separator />
 
-          <q-card-actions align="right">
-            <q-btn v-close-popup flat color="primary" label="Reserve" />
-            <q-btn v-close-popup flat color="primary" round icon="event" />
-          </q-card-actions>
         </q-card>
       </q-dialog>
 
@@ -60,7 +48,7 @@
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.name" :cam_id="props.row.id" :working="props.row.working">
+            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.flv_url" :cam_id="props.row.id" :working="props.row.working">
             </card-profile>
           </div>
         </template>
@@ -80,7 +68,7 @@ export default {
       columns: [
         {name: 'Id', label: 'Name', field: 'id', sortable: true, align: 'left'},
         {name: 'Name', label: 'Crated Date', field: 'name', sortable: true, align: 'left'},
-        {name: 'Url', label: 'Project', field: 'url', sortable: true, align: 'left'},
+        {name: 'Url', label: 'Project', field: 'flv_url', sortable: true, align: 'left'},
         {name: 'working', label: '', field: 'working', sortable: false, align: 'center'}
       ],
       data: [],
