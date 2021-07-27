@@ -228,7 +228,7 @@ export default {
       var a=this.warning_option.indexOf('e-mail');
       if(a !== -1){
         this.prompt=true
-      }
+              }
       if(this.warning_option.length===0){
         this.$q.notify({
           type: 'warning',
@@ -245,11 +245,29 @@ export default {
       if(a !== -1){
         this.prompt=true
         notify = 1;
+
+        var pattern= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        var strEmail=pattern.test(this.address);
+        if (!strEmail)
+        {
+          this.$q.notify({
+            type: 'warning',
+            message: '请输入正确的邮箱地址！'
+          })
+
+        }
+
+        return
+
       }
       a=this.warning_option.indexOf('web');
       if(a !== -1) {
         notify += 2;
       }
+
+
+
+
       this.$axios.post('http://camotion.zrp.cool:8000/set_user_setting', {
         "user_id": sessionStorage.getItem("user_id"),
         "notify":notify,

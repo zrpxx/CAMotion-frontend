@@ -95,7 +95,7 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-         点击后，将发送连接码，请在两分钟内将连接码复制粘贴到算法命令行。
+         点击OK后，将发送连接码，请在两分钟内将连接码复制粘贴到算法命令行。
         </q-card-section>
 
         <q-card-actions align="right">
