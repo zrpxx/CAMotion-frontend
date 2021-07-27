@@ -106,16 +106,34 @@
 
 
 
-    <q-dialog v-model="show_code">
-      <q-card style="width: 40%">
+    <q-dialog v-model="show_code" persistent>
+      <q-card style="width:80%">
         <q-card-section>
           <div class="text-h6">Hint</div>
         </q-card-section>
 
-        <q-linear-progress stripe size="10px" :value="progress1"   />
+        <q-linear-progress stripe size="10px" :value="progress1" :color="get_color()"  />
 
-        <q-card-section class="text-h1 text-center text-primary text-weight-bold">
-          {{code}}
+        <q-card-section class="text-h3 text-center text-weight-bold">
+
+          <p :class="'text-' + get_color()"> {{code}} </p>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary"  v-close-popup />
+
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="alert2">
+      <q-card class="text-center" style="width:20%">
+        <q-card-section>
+          <div class="text-h6">Alert</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none"  >
+          Time out!
         </q-card-section>
 
         <q-card-actions align="right">
@@ -123,6 +141,8 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+
 
   </div>
 </template>
@@ -137,12 +157,22 @@ export default {
   },
   methods: {
 
+    get_color() {
+      if(this.progress1 < 0.15)
+          return 'red'
+      else if (this.progress1 < 0.3)
+          return 'yellow'
+      return 'primary'
+    },
+
     count_time(){
       this.progress1-=1/120
       if(this.progress1>0){
         setTimeout(this.count_time,1000)
       } else {
-
+          this.show_code=false
+          this.alert2=true
+          this.progress1 = 1
       }
     },
 
@@ -234,6 +264,7 @@ export default {
 
   data(){
     return {
+      alert2:false,
       show_code: false,
       code: '',
       address:'',
