@@ -225,6 +225,7 @@ export default {
          type: 'warning',
          message: '选项不能为空'
        })
+       this.warning_option=['web']
      }
 
     },
