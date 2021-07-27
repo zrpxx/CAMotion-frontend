@@ -105,11 +105,14 @@
     </q-dialog>
 
 
+
     <q-dialog v-model="show_code">
       <q-card style="width: 40%">
         <q-card-section>
           <div class="text-h6">Hint</div>
         </q-card-section>
+
+        <q-linear-progress stripe size="10px" :value="progress1"   />
 
         <q-card-section class="text-h1 text-center text-primary text-weight-bold">
           {{code}}
@@ -134,8 +137,13 @@ export default {
   },
   methods: {
 
-    remind(){
+    count_time(){
+      this.progress1-=1/120
+      if(this.progress1>0){
+        setTimeout(this.count_time,1000)
+      } else {
 
+      }
     },
 
     get_code() {
@@ -147,6 +155,7 @@ export default {
           if(res.status === 'Success'){
             this.code = res.code
             this.show_code = true
+            this.count_time()
           }
 
         }).catch( (error) => {
@@ -231,7 +240,7 @@ export default {
       alert:false,
       card: false,
       pic: false,
-
+      progress1: 1,
       slide: 1,
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
 
