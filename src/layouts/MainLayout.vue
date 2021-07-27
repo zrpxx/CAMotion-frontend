@@ -92,6 +92,9 @@ export default {
 
   data () {
     return {
+      websocket: null,
+      ws_connected: false,
+      ws_timer: null,
       leftDrawerOpen: false,
       menuList: [
         {
@@ -114,12 +117,18 @@ export default {
     }
   },
   created() {
-    this.timer = setInterval(this.judge_admin, 1000);
+    setInterval(this.judge_admin, 1000);
+    this.ws_timer = setInterval(this.conn_ws, 1000)
   },
   methods: {
     logout() {
       sessionStorage.removeItem('user_id')
       sessionStorage.removeItem('is_admin')
+      if(this.ws_connected) {
+        this.websocket.close()
+        this.ws_connected = false
+        this.ws_timer = setInterval(this.conn_ws, 1000)
+      }
       this.$router.push('/')
     },
     judge_admin() {
@@ -127,6 +136,42 @@ export default {
         this.is_admin = true
       } else
         this.is_admin = false
+    },
+    conn_ws() {
+      if(sessionStorage.getItem('user_id') !== undefined && sessionStorage.getItem('user_id') !== null) {
+        if(!this.ws_connected) {
+          this.websocket = new WebSocket('ws://zrp.cool:8000/ws_user/' + sessionStorage.getItem('user_id'))
+          this.websocket.onopen = this.open_ws
+          this.websocket.onclose = this.close_ws
+          this.websocket.onmessage = this.message_ws
+        }
+      }
+    },
+    open_ws() {
+      console.log("ws opened")
+      this.ws_connected = true
+      clearInterval(this.ws_timer)
+    },
+    close_ws() {
+      console.log("ws disconnected")
+      //this.ws_connected = false
+      //this.ws_timer = setInterval(this.conn_ws, 1000)
+    },
+    message_ws(e) {
+      console.log((e.data))
+      let msg = e.data
+      let notify = {}
+      switch (msg) {
+        case 'welcome':
+          notify = {
+            type: 'positive',
+            message: 'Connection established.'
+          }
+          break;
+        default:
+          notify = {}
+      }
+      this.$q.notify(notify)
     }
   }
 }
