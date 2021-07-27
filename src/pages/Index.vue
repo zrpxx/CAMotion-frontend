@@ -184,9 +184,9 @@ export default {
         if(res.status === 'Success') {
           this.username = res.name
           var notify = res.notify
-          if(notify%2 === 1)
+          if(notify >= 1)
             this.warning_options[1].value = 'e-mail'
-          if(notify >= 2)
+          if(notify%2 === 1)
           {
             this.warning_options[0].value = 'web'
           }
@@ -225,10 +225,20 @@ export default {
    // if(this.sessionStorage.getItem('user_id')===)
 
     jude_email(){
+      //console.log('judge_email')
+      var notify = 0;
+      console.log(this.warning_option)
       var a=this.warning_option.indexOf('e-mail');
-      if(a !== -1){
-        this.prompt=true
-              }
+      if(a !== -1) {
+        this.prompt = true
+        notify = 2;
+      }
+      a=this.warning_option.indexOf('web');
+      console.log('a'+a)
+      if(a !== -1) {
+        notify += 1;
+      }
+      console.log(notify)
       if(this.warning_option.length===0){
         this.$q.notify({
           type: 'warning',
@@ -236,15 +246,50 @@ export default {
         })
         this.warning_option=['web']
       }
+      if(notify === 1)
+      {
+        this.$axios.post('http://camotion.zrp.cool:8000/set_user_setting', {
+          "user_id": sessionStorage.getItem("user_id"),
+          "notify":notify,
+          "email": '',
+
+        }).then((response) => {
+          //console.log('address'+this.address)
+          console.log(response)
+          let res = response.data
+          if (res.status === 'Success') {
+
+            this.$q.notify({
+              type: 'positive',
+              message: 'Send Successfully!'
+            })
+            this.reportText = ""
+
+          } else {
+            //console.log(res.message)
+            this.$q.notify({
+              type: 'warning',
+              message: res.message
+            })
+          }
+        }).catch((error) => {
+          console.log(error)
+          this.$q.notify({
+            type: 'negative',
+            message: 'Internal error.'
+          })
+        })
+      }
 
     },
 
     post_settings() {
-      var notify;
+      console.log('post_settings')
+      var notify = 0;
       var a=this.warning_option.indexOf('e-mail');
       if(a !== -1){
         this.prompt=true
-        notify = 1;
+        notify = 2;
 
         var pattern= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         var strEmail=pattern.test(this.address);
@@ -254,18 +299,15 @@ export default {
             type: 'warning',
             message: '请输入正确的邮箱地址！'
           })
-
+          return
         }
-
-        return
-
       }
       a=this.warning_option.indexOf('web');
       if(a !== -1) {
-        notify += 2;
+        notify += 1;
       }
 
-
+      console.log('notify')
 
 
       this.$axios.post('http://camotion.zrp.cool:8000/set_user_setting', {
