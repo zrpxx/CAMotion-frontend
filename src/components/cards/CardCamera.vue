@@ -99,6 +99,23 @@
         </q-card-section>
 
         <q-card-actions align="right">
+          <q-btn flat label="OK" @click="get_code()" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
+    <q-dialog v-model="show_code">
+      <q-card style="width: 40%">
+        <q-card-section>
+          <div class="text-h6">Hint</div>
+        </q-card-section>
+
+        <q-card-section class="text-h1 text-center text-primary text-weight-bold">
+          {{code}}
+        </q-card-section>
+
+        <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -121,8 +138,27 @@ export default {
 
     },
 
+    get_code() {
+      this.$axios.post('http://camotion.zrp.cool:8000/generate_connection_code?user_id=' +sessionStorage.getItem('user_id')+'&cam_id='+this.cam_id)
+        .then( (response) => {
+          console.log(response)
+          let res = response.data
+          console.log(res)
+          if(res.status === 'Success'){
+            this.code = res.code
+            this.show_code = true
+          }
 
-    get_log(){
+        }).catch( (error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
+    },
+
+    get_log() {
 
       this.$axios.get('http://camotion.zrp.cool:8000/get_camera_log/' + this.cam_id)
         .then( (response) => {
@@ -189,6 +225,8 @@ export default {
 
   data(){
     return {
+      show_code: false,
+      code: '',
       address:'',
       alert:false,
       card: false,
