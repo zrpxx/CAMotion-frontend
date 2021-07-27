@@ -82,7 +82,7 @@ export default {
     prompt () {
       this.$q.dialog({
         title: 'Add Camera',
-        message: 'Input the camera id:',
+        message: 'Input the camera name:',
         prompt: {
           model: '',
           type: 'text' // optional
