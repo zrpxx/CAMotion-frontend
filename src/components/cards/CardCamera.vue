@@ -47,7 +47,9 @@
 
       <q-card-actions align="center">
 
-        <q-btn flat round icon="link" v-if="working==='offline'" class="bg-info text-white" @click="get_log()"/>
+
+        <q-btn flat round icon="link" v-if="working==='offline'" class="bg-info text-white" @click="alert = true"/>
+
         <q-btn flat round icon="ondemand_video" v-if="working==='online'" class="bg-indigo-7 text-white" @click= "$router.push(
           {
             name: 'cam_detail',
@@ -85,17 +87,41 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Hint</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+         点击后，将发送连接码，请在两分钟内将连接码复制粘贴到算法命令行。
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
 <script>
 export default {
+
   name: "CardProfile",
   props: ['avatar', 'name', 'url', 'cam_id', 'working'],
   created(){
 
   },
   methods: {
+
+    remind(){
+
+    },
+
+
     get_log(){
 
       this.$axios.get('http://camotion.zrp.cool:8000/get_camera_log/' + this.cam_id)
@@ -163,6 +189,8 @@ export default {
 
   data(){
     return {
+      address:'',
+      alert:false,
       card: false,
       pic: false,
 
