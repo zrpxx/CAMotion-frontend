@@ -168,6 +168,33 @@ export default {
             message: 'Connection established.'
           }
           break;
+        case 'working':
+          notify = {
+            type: 'positive',
+            message: 'New camera online!',
+            actions: [
+              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/cam') } }
+            ]
+          }
+          break;
+        case 'not_working':
+          notify = {
+            type: 'negative',
+            message: 'Camera offline!',
+            actions: [
+              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/cam') } }
+            ]
+          }
+          break;
+        case 'New alert':
+          notify = {
+            type: 'negative',
+            message: 'Alert triggered!',
+            actions: [
+              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/alert_log') } }
+            ]
+          }
+          break;
         default:
           notify = {}
       }
