@@ -28,7 +28,8 @@
 
       <q-card-section class="text-center">
         <q-avatar size="100px" class="shadow-10">
-          <img src="~assets/camera.jpg">
+          <img v-if="working==='online'" src="~assets/camera.jpg">
+          <img v-if="working==='offline'" src="~assets/camera_off.jpg">
         </q-avatar>
       </q-card-section>
 
@@ -38,9 +39,6 @@
         </div>
         <div class="text-h6 text-grey-8" style="color: #1e88e5">
           name: {{ name }}
-        </div>
-        <div class="text-url text-grey-8">
-          url: {{ url }}
         </div>
         <div class="text-url text-grey-8">
           status: {{ working }}
