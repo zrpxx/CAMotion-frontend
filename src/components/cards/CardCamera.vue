@@ -46,7 +46,9 @@
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat round icon="ondemand_video" :disable="working==='offline'" class="bg-indigo-7 text-white" @click= "$router.push(
+
+        <q-btn flat round icon="link" v-if="working==='offline'" class="bg-info text-white" @click="get_log()"/>
+        <q-btn flat round icon="ondemand_video" v-if="working==='online'" class="bg-indigo-7 text-white" @click= "$router.push(
           {
             name: 'cam_detail',
             params: {
