@@ -83,6 +83,7 @@
           </q-card-section>
           <q-card-actions align="right">
             <q-btn class="text-capitalize" @click="jude_email()">Save settings</q-btn>
+
             <q-dialog v-model="prompt" persistent>
               <q-card style="min-width: 350px">
                 <q-card-section>
@@ -95,7 +96,7 @@
 
                 <q-card-actions align="right" class="text-primary">
                   <q-btn flat label="Cancel" v-close-popup />
-                  <q-btn flat label="Add address" v-close-popup />
+                  <q-btn flat label="Add address" @click="post_settings()" v-close-popup />
                 </q-card-actions>
               </q-card>
             </q-dialog>
@@ -155,11 +156,11 @@ export default {
       warning_options: [
         {
           label: '网页通知',
-          value: 'web'
+          value: ''
         },
         {
           label: '电子邮件',
-          value: 'e-mail'
+          value: ''
         },
       ],
       user_details: {},
@@ -182,6 +183,14 @@ export default {
         let res = response.data
         if(res.status === 'Success') {
           this.username = res.name
+          var notify = res.notify
+          if(notify%2 === 1)
+            this.warning_options[1].value = 'e-mail'
+          if(notify >= 2)
+          {
+            this.warning_options[0].value = 'web'
+          }
+
           switch (res.role) {
             case 0:
               this.user_role = 'User'
@@ -217,17 +226,61 @@ export default {
 
     jude_email(){
       var a=this.warning_option.indexOf('e-mail');
-     if(a!==-1){
-       this.prompt=true
+      if(a !== -1){
+        this.prompt=true
       }
-     if(this.warning_option.length===0){
-       this.$q.notify({
-         type: 'warning',
-         message: '选项不能为空'
-       })
-       this.warning_option=['web']
-     }
+      if(this.warning_option.length===0){
+        this.$q.notify({
+          type: 'warning',
+          message: '选项不能为空'
+        })
+        this.warning_option=['web']
+      }
 
+    },
+
+    post_settings() {
+      var notify;
+      var a=this.warning_option.indexOf('e-mail');
+      if(a !== -1){
+        this.prompt=true
+        notify = 1;
+      }
+      a=this.warning_option.indexOf('web');
+      if(a !== -1) {
+        notify += 2;
+      }
+      this.$axios.post('http://camotion.zrp.cool:8000/set_user_setting', {
+        "user_id": sessionStorage.getItem("user_id"),
+        "notify":notify,
+        "email": this.address,
+
+      }).then((response) => {
+        //console.log('address'+this.address)
+        console.log(response)
+        let res = response.data
+        if (res.status === 'Success') {
+
+          this.$q.notify({
+            type: 'positive',
+            message: 'Send Successfully!'
+          })
+          this.reportText = ""
+
+        } else {
+          //console.log(res.message)
+          this.$q.notify({
+            type: 'warning',
+            message: res.message
+          })
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Internal error.'
+        })
+      })
     },
 
     user_suggestion(){
