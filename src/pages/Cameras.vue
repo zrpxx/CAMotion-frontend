@@ -45,7 +45,7 @@
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.flv_url" :cam_id="props.row.id" :working="(props.row.working==='true')? 'online':'offline'">
+            <card-profile :avatar="props.row.avatar" :name="props.row.name" :url="props.row.flv_url" :cam_id="props.row.id" :working="(props.row.working===true)? 'online':'offline'">
             </card-profile>
           </div>
         </template>
