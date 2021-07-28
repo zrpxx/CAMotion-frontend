@@ -308,7 +308,7 @@ export default {
         {
           this.$q.notify({
             type: 'warning',
-            message: '请输入正确的邮箱地址！'
+            message: 'Please input correct e-mail!'
           })
           return
         }
@@ -382,7 +382,7 @@ export default {
       }else{
         this.$q.notify({
           type: 'warning',
-          message: "发送内容不能为空白"
+          message: "The input box is blank!"
         })
       }
     },
@@ -399,7 +399,7 @@ export default {
           if (res.status === 'Success') {
             this.$q.notify({
               type: 'positive',
-              message: '修改成功'
+              message: 'Saved successfully!'
             })
           } else {
             //console.log(res.message)
@@ -418,7 +418,7 @@ export default {
       }else{
         this.$q.notify({
           type: 'warning',
-          message: '前后输入的密码不一致.'
+          message: 'The two passwords entered are different!'
         })
       }
     },
