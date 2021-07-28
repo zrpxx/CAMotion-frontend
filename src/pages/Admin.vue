@@ -67,23 +67,26 @@
           <q-separator />
 
           <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="message" class="q-pa-sm">
-              <q-item v-for="msg in messages" :key="msg.uid" clickable v-ripple @click="alert(msg.info)">
-                <q-item-section avatar>
-                  <q-img src="~assets/profile.svg"> </q-img>
-                </q-item-section>
+            <q-tab-panel name="message" class="q-pa-sm" style="min-height: 200px">
+              <div v-if="messages.length > 0">
+                <q-item v-for="msg in messages" :key="msg.uid" clickable v-ripple @click="alert(msg.info)">
+                  <q-item-section avatar>
+                    <q-img src="~assets/profile.svg"> </q-img>
+                  </q-item-section>
 
-                <q-item-section>
-                  <!--<q-item-label v-if="msg.status === 0"> unhandled </q-item-label>
-                  <q-item-label v-if="msg.status === 1"> handled </q-item-label> -->
-                  <q-item-label class="text-subtitle1"> {{ msg.uid }}</q-item-label>
-                  <q-item-label caption lines="1">{{ msg.info }}</q-item-label>
-                </q-item-section>
-                <q-item-section side>
-                  <q-btn  icon="email" style="color:cornflowerblue" @click="change_msg_status(msg.id,true)"> </q-btn>
-                  {{ msg.time }}
-                </q-item-section>
-              </q-item>
+                  <q-item-section>
+                    <!--<q-item-label v-if="msg.status === 0"> unhandled </q-item-label>
+                    <q-item-label v-if="msg.status === 1"> handled </q-item-label> -->
+                    <q-item-label class="text-subtitle1"> {{ msg.uid }}</q-item-label>
+                    <q-item-label caption lines="1">{{ msg.info }}</q-item-label>
+                  </q-item-section>
+                  <q-item-section side>
+                    <q-btn  icon="email" style="color:cornflowerblue" @click.stop="change_msg_status(msg.id,true)"> </q-btn>
+                    {{ msg.time }}
+                  </q-item-section>
+                </q-item>
+              </div>
+              <div v-else class="absolute-center text-h3 text-primary q-pa-xl">No message</div>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -227,28 +230,28 @@ export default {
         {
           title: "Numbers of camera",
           icon: "camera",
-          value: "10",
+          value: "",
           color1: "#546bfa",
           color2: "#3e51b5"
         },
         {
           title: "Numbers of VIP",
           icon: "account_circle",
-          value: "5",
+          value: "",
           color1: "#3a9688",
           color2: "#3e51b5"
         },
         {
           title: "New Customers",
           icon: "person_add",
-          value: "2",
+          value: "",
           color1: "#7cb342",
           color2: "#3e51b5"
         },
         {
           title: "Active Users",
           icon: "person",
-          value: "8",
+          value: "",
           color1: "#f88c2b",
           color2: "#3e51b5"
         }
@@ -297,6 +300,10 @@ export default {
         this.recent_camera.series[0].data=res.recent_cam_add.reverse()
         this.registerStatistic.series[0].data=res.recent_register.reverse()
         this.alertStatistic.series[0].data=res.recent_alert.reverse()
+        this.items[0].value=res.user_count
+        this.items[1].value=res.vip_count
+        this.items[2].value=res.cam_count
+        this.items[3].value=res.alert_count
       }).catch((error) => {
         console.log(error)
         this.$q.notify({

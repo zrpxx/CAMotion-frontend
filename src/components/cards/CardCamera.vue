@@ -253,6 +253,7 @@ export default {
         console.log(response)
         let res = response.data
         if (res.status === 'Success') {
+          this.$router.go(0)
           this.$q.notify({
             type: 'positive',
             message: 'Delete Successfully!'

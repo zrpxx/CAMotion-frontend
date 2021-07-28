@@ -14,7 +14,7 @@
 
           </q-card-section>
           <q-card-section class="text-center">
-            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="buy_vip()"> 购买会员 </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="buy_vip()"> Buy VIP </q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -72,7 +72,7 @@
             <div class="text-h6">Settings</div>
           </q-card-section>
           <q-card-section class="q-pa-sm row">
-            报警通知设置
+            Alert log setting
             <q-option-group
               v-model="warning_option"
               :options="warning_options"
@@ -107,7 +107,7 @@
         <div  class="q-mx-auto q-my-xl" style="width: 100%">
         <q-card  v-if="user_role !== 'Admin'"  >
           <q-card-section >
-            <div class="text-h6">用户反馈</div>
+            <div class="text-h6">User Feedback</div>
           </q-card-section>
             <div class="q-pa-md" style="max-width: 1000px;max-height: 500px">
               <q-input
@@ -119,7 +119,7 @@
 
 
           <q-card-actions align="center">
-            <q-btn class="text-capitalize" @click = "user_suggestion()" > 提交 </q-btn>
+            <q-btn class="text-capitalize" @click = "user_suggestion()" > Submit </q-btn>
           </q-card-actions>
 
         </q-card>
@@ -154,12 +154,12 @@ export default {
       ],
       warning_options: [
         {
-          label: '网页通知',
+          label: 'Web',
           value: '',
           disable: true
         },
         {
-          label: '电子邮件',
+          label: 'E-mail',
           value: ''
         },
       ],
@@ -184,7 +184,7 @@ export default {
         if(res.status === 'Success') {
           this.username = res.name
           var notify = res.notify
-          if(notify >= 1)
+          if(notify >= 2)
             this.warning_options[1].value = 'e-mail'
           if(notify%2 === 1)
           {
