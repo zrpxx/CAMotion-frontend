@@ -65,8 +65,8 @@
 
     <q-dialog v-model="pic">
       <q-card class="my-card">
-        <q-img :src="screenshot" style="width: 600px"/>  <!--变量无法访问    -->
-
+        <q-skeleton style="width: 600px" height="400px" v-if="!this.load_over" square/>
+        <q-img :src="screenshot" style="width: 600px" @load="load_over = true"/>
         <q-card-section>
           <!--
           <q-btn

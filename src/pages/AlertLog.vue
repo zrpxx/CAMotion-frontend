@@ -7,7 +7,7 @@
                :pagination.sync="pagination">
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
-            <q-btn icon="image" size="md" @click="image = props.row.image,card = true" flat dense/>
+            <q-btn icon="image" size="md" @click="image = props.row.image, load_over = false,card = true" flat dense/>
             <q-btn icon="check" size="md" color="red" class="q-ml-sm" v-if="props.row.Result === 'unhandled'" @click = "props.row.Result = 'handled'" flat dense/>
             <q-btn icon="cancel" size="md" class="q-ml-sm" v-if="props.row.Result === 'handled'" @click = "props.row.Result = 'unhandled'" flat dense/>
 
@@ -19,18 +19,23 @@
 
   </q-card>
 
+
+
+
+
     <q-dialog v-model="card">
       <q-card class="my-card">
-        <q-img :src="image" style="width: 600px"/>  <!--变量无法访问    -->
+        <q-skeleton style="width: 600px" height="400px" v-if="!this.load_over" square/>
+        <q-img :src="image" style="width: 600px" @load="load_over = true"/>  <!--变量无法访问    -->
 
         <q-card-section>
-          <q-btn
+          <!--<q-btn
             fab
             color="primary"
             icon="place"
             class="absolute"
             style="top: 0; right: 12px; transform: translateY(-50%);"
-          />
+          />-->
 
           <div class="row no-wrap items-center">
             <div class="col text-h6 ellipsis">
@@ -48,9 +53,10 @@
             Small plates, salads & sandwiches in an intimate setting.
           </div>
         </q-card-section>
+        <q-separator />
 -->
 
-        <q-separator />
+
 
         <q-card-actions align="right">
           <!--
@@ -100,7 +106,7 @@ export default {
 
       data: [],
       image: '',
-
+      load_over : false,
       columns: [
        // {name: 'Id', label: 'Id', field: 'id', sortable: true, align: 'center'},
         {name: 'Time', label: 'Time', field: 'Time', sortable: true, align: 'center'},
