@@ -328,7 +328,7 @@ export default {
 
           this.$q.notify({
             type: 'positive',
-            message: 'Send Successfully!'
+            message: 'Save Successfully!'
           })
           this.reportText = ""
 
