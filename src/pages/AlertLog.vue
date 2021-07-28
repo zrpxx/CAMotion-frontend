@@ -38,7 +38,7 @@
           />-->
 
           <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">
+            <div class="col text-h6 ellipsis text-center">
               Screenshot
             </div>
           </div>
