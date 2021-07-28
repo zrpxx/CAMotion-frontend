@@ -121,7 +121,7 @@ export default {
           console.log("time:"+elem.time);
           a.Camera_number = elem.id;
           a.Content = elem.info;
-          a.image = elem.attachment;
+          a.image = elem.images;
           //a.Result = elem.info;
           // ···
           realData.push(a);
