@@ -59,7 +59,7 @@
           }
         )"/>
         <q-btn flat round icon="notifications" class="bg-info text-white" @click="get_log(),card=true"/>
-        <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="deleteCam()"/>
+        <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="confirm_delete=true"/>
       </q-card-actions>
     </q-card>
 
@@ -142,6 +142,23 @@
       </q-card>
     </q-dialog>
 
+
+    <q-dialog v-model="confirm_delete">
+      <q-card class="text-center" style="width:20%">
+        <q-card-section>
+          <div class="text-h6">Alert</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none"  >
+          Are you sure you want to delete it?
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Yes" color="red" @click="deleteCam()" v-close-popup />
+          <q-btn flat label="No" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
 
   </div>
@@ -240,6 +257,7 @@ export default {
             type: 'positive',
             message: 'Delete Successfully!'
           })
+          this.$router.go(0)
         } else {
           //console.log(res.message)
           this.$q.notify({
@@ -264,6 +282,7 @@ export default {
 
   data(){
     return {
+      confirm_delete:false,
       alert2:false,
       show_code: false,
       code: '',

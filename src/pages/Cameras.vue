@@ -31,6 +31,25 @@
         </q-card>
       </q-dialog>
 
+
+      <q-dialog v-model="confirm_delete_all">
+        <q-card class="text-center" style="width:30%">
+          <q-card-section>
+            <div class="text-h6">Alert</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none"  >
+            Are you sure you want to delete all?
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Yes" color="red" @click="delete_All()" v-close-popup />
+            <q-btn flat label="No" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
+
       <div class="text-h6 text-grey-8">
         Cameras
       </div>
@@ -41,7 +60,7 @@
         <template v-slot:top-right>
           <q-btn side label="Add camera" @click="prompt()" icon="add_to_photos" color="primary"></q-btn>
 
-          <q-btn side label="Delete all" @click="delete_All()" icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
+          <q-btn side label="Delete all" @click="confirm_delete_all=true" icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -70,7 +89,7 @@ export default {
       ],
       data: [],
       card: false,
-
+      confirm_delete_all: false,
       slide: 1,
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
 
@@ -115,6 +134,7 @@ export default {
               type: 'positive',
               message: 'create Successfully!'
             })
+            this.$router.go(0)
           } else {
             //console.log(res.message)
             this.$q.notify({
@@ -145,6 +165,7 @@ export default {
             type: 'positive',
             message: 'Delete Successfully!'
           })
+          this.$router.go(0)
         } else {
           //console.log(res.message)
           this.$q.notify({
