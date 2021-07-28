@@ -24,7 +24,7 @@
         </q-card-actions>-->
       </q-card>
     </q-dialog>
-    <q-card>
+    <q-card :style="working === 'offline' ? 'background-image: linear-gradient(to top, #09203f 0%, #537895 100%);' : 'background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);'">
 
       <q-card-section class="text-center">
         <q-avatar size="100px" class="shadow-10">
@@ -34,14 +34,14 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center ">
-        <div class="text-id  text-grey-8">
+        <div class="text-subtitle1  text-white text-weight-bold">
           camera id: {{ cam_id }}
         </div>
-        <div class="text-h6 text-grey-8" style="color: #1e88e5">
+        <div class="text-h6 text-white text-weight-bold">
           name: {{ name }}
         </div>
-        <div class="text-url text-grey-8">
-          status: {{ working }}
+        <div class="text-h6 text-white text-weight-bold">
+          status: <q-badge :label="working" class="text-h6 text-white text-weight-bold" :color="working === 'online' ? 'primary' : 'red'"></q-badge>
         </div>
       </q-card-section>
 
@@ -58,8 +58,8 @@
             }
           }
         )"/>
-        <q-btn flat round icon="notifications" class="bg-info text-white" @click="get_log(),card=true"/>
-        <q-btn flat round icon="delete" class="bg-indigo-8 text-white" @click="confirm_delete=true"/>
+        <q-btn flat round icon="notifications" class="bg-orange text-white" @click="get_log(), card=true"/>
+        <q-btn flat round icon="delete" class="bg-red text-white" @click="confirm_delete=true"/>
       </q-card-actions>
     </q-card>
 
@@ -120,8 +120,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
+          <q-btn flat label="Copy code" color="primary"  @click="onCopy()" />
           <q-btn flat label="OK" color="primary"  v-close-popup />
-
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -191,6 +191,18 @@ export default {
           this.alert2=true
           this.progress1 = 1
       }
+    },
+
+    onCopy() {
+      this.$copyText(this.code).then(
+        e => {
+          console.log("copy arguments e:", e);
+          this.$q.notify({
+            type: 'positive',
+            message: 'Code copied successfully.'
+          });
+        }
+      )
     },
 
     get_code() {

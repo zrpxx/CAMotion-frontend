@@ -61,7 +61,7 @@
           <q-btn side label="Buy VIP to add more cam" disable v-if="!judge_vip()" icon="add_to_photos" color="primary"></q-btn>
           <q-btn side label="Add camera" v-else @click="prompt()" icon="add_to_photos" color="primary"></q-btn>
 
-          <q-btn side label="Delete all" @click="confirm_delete_all=true" icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
+          <q-btn side label="Delete all" @click="confirm_delete_all=true" icon="clear_all" color="red" style="margin-left:10px;"></q-btn>
         </template>
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">

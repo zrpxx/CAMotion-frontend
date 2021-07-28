@@ -220,8 +220,9 @@ export default {
         default:
           notify = {}
       }
-      if(notify !== {})
+      if(notify.message) {
         this.$q.notify(notify)
+      }
     }
   }
 }

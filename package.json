@@ -19,6 +19,7 @@
     "flv.js": "^1.6.0",
     "quasar": "^1.0.0",
     "vue-apexcharts": "^1.6.1",
+    "vue-clipboard2": "^0.3.1",
     "vue-echarts-v3": "^2.0.1",
     "vue-socket.io": "^3.0.10"
   },
