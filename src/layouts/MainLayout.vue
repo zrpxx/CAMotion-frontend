@@ -124,6 +124,7 @@ export default {
     logout() {
       sessionStorage.removeItem('user_id')
       sessionStorage.removeItem('is_admin')
+      sessionStorage.removeItem('VIP')
       if(this.ws_connected) {
         this.websocket.close()
         this.ws_connected = false
@@ -137,6 +138,9 @@ export default {
       } else
         this.is_admin = false
     },
+
+
+
     conn_ws() {
       if(sessionStorage.getItem('user_id') !== undefined && sessionStorage.getItem('user_id') !== null) {
         if(!this.ws_connected) {

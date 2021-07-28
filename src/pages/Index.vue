@@ -14,10 +14,35 @@
 
           </q-card-section>
           <q-card-section class="text-center">
-            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="buy_vip()"> Buy VIP </q-btn>
+            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="confirm_buy_vip=true"> Buy VIP </q-btn>
           </q-card-section>
+
+
+          <q-dialog v-model="confirm_buy_vip">
+            <q-card class="text-center" style="width:30%">
+              <q-card-section>
+                <div class="text-h6">Remind</div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none"  >
+                Are you sure you want to buy vip?
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn  flat label="Yes" color="red" @click="buy_vip()" v-close-popup />
+                <q-btn flat label="No" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+
+
         </q-card>
       </div>
+
+
+
+
+
       <div class="q-mx-auto q-my-xl" style="width: 80%">
         <q-card>
           <q-card-section class="text-h6 q-pa-sm">
@@ -136,7 +161,7 @@ export default {
   data() {
     return {
 
-
+      confirm_buy_vip:false,
         alert: false,
         confirm: false,
         prompt: false,
@@ -194,9 +219,11 @@ export default {
           switch (res.role) {
             case 0:
               this.user_role = 'User'
+              sessionStorage.setItem('User', "true")
               break;
             case 1:
               this.user_role = 'VIP'
+              sessionStorage.setItem('VIP', "true")
               break;
             case 100:
               sessionStorage.setItem('is_admin', "true")
@@ -427,6 +454,7 @@ export default {
       console.log(response)
       let res = response.data
       if(res.status === 'Success') {
+        this.$router.go(0)
         this.user_role = (res.role==='1')? 'Vip':'User'
       } else {
         //console.log(res.message)
