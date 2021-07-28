@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-dialog v-model="card">
-      <q-card class="my-card">
+      <q-card class="my-card" style="width: 60%">
          <q-table :data="data"
                   :columns="columns">
            <template v-slot:body-cell-Action="props">
