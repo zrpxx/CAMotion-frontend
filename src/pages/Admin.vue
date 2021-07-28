@@ -228,29 +228,29 @@ export default {
       },
       items: [
         {
-          title: "Numbers of camera",
+          title: "Camera count",
           icon: "camera",
           value: "",
           color1: "#546bfa",
           color2: "#3e51b5"
         },
         {
-          title: "Numbers of VIP",
+          title: "VIP Count",
           icon: "account_circle",
           value: "",
           color1: "#3a9688",
           color2: "#3e51b5"
         },
         {
-          title: "New Customers",
-          icon: "person_add",
+          title: "User count",
+          icon: "person",
           value: "",
           color1: "#7cb342",
           color2: "#3e51b5"
         },
         {
-          title: "Active Users",
-          icon: "person",
+          title: "Alert count",
+          icon: "warning",
           value: "",
           color1: "#f88c2b",
           color2: "#3e51b5"
@@ -300,9 +300,9 @@ export default {
         this.recent_camera.series[0].data=res.recent_cam_add.reverse()
         this.registerStatistic.series[0].data=res.recent_register.reverse()
         this.alertStatistic.series[0].data=res.recent_alert.reverse()
-        this.items[0].value=res.user_count
+        this.items[0].value=res.cam_count
         this.items[1].value=res.vip_count
-        this.items[2].value=res.cam_count
+        this.items[2].value=res.user_count
         this.items[3].value=res.alert_count
       }).catch((error) => {
         console.log(error)

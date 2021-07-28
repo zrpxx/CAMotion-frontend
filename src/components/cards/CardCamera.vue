@@ -80,7 +80,7 @@
           -->
 
           <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">
+            <div class="col text-h6 ellipsis text-center">
               Screenshot
             </div>
           </div>
@@ -299,6 +299,7 @@ export default {
       alert2:false,
       show_code: false,
       code: '',
+      load_over: false,
       address:'',
       alert:false,
       card: false,

@@ -173,19 +173,16 @@ export default {
       username: 'A1',
       user_role: 'Vip',
       reportText: '',
-      warning_option: [
-        'web',
-        'e-mail'
-      ],
+      warning_option: [],
       warning_options: [
         {
           label: 'Web',
-          value: '',
+          value: 'web',
           disable: true
         },
         {
           label: 'E-mail',
-          value: ''
+          value: 'email'
         },
       ],
       user_details: {},
@@ -197,6 +194,7 @@ export default {
     }
   },
   created() {
+    console.log("created")
     if(sessionStorage.getItem('user_id') === undefined || sessionStorage.getItem('user_id') === null)
     {
       this.$router.push('/')
@@ -204,17 +202,18 @@ export default {
     let user_id = sessionStorage.getItem('user_id')
     this.$axios.get('http://camotion.zrp.cool:8000/user/' + user_id).then(
       (response) => {
-        console.log(response)
+        console.log("created"+response)
         let res = response.data
         if(res.status === 'Success') {
           this.username = res.name
           var notify = res.notify
           if(notify >= 2)
-            this.warning_options[1].value = 'e-mail'
+            this.warning_option.push('email')
           if(notify%2 === 1)
           {
-            this.warning_options[0].value = 'web'
+            this.warning_option.push('web')
           }
+          console.log(this.warning_option)
 
           switch (res.role) {
             case 0:
@@ -253,33 +252,17 @@ export default {
 
     jude_email(){
       //console.log('judge_email')
-      var notify = 0;
+      var notify = 1;
       console.log(this.warning_option)
-      var a=this.warning_option.indexOf('e-mail');
-      if(a !== -1) {
-        this.prompt = true
-        notify = 2;
-      }
-      a=this.warning_option.indexOf('web');
-      console.log('a'+a)
-      if(a !== -1) {
-        notify += 1;
-      }
       console.log(notify)
-      if(this.warning_option.length===0){
-        this.$q.notify({
-          type: 'warning',
-          message: '选项不能为空'
-        })
-        this.warning_option=['web']
-      }
+      if(this.warning_option.indexOf('email') !== -1)
+        notify += 2;
       if(notify === 1)
       {
         this.$axios.post('http://camotion.zrp.cool:8000/set_user_setting', {
           "user_id": sessionStorage.getItem("user_id"),
           "notify":notify,
           "email": '',
-
         }).then((response) => {
           //console.log('address'+this.address)
           console.log(response)
@@ -307,16 +290,17 @@ export default {
           })
         })
       }
-
+      else {
+        this.prompt=true
+      }
     },
 
     post_settings() {
       console.log('post_settings')
-      var notify = 0;
-      var a=this.warning_option.indexOf('e-mail');
-      if(a !== -1){
-        this.prompt=true
-        notify = 2;
+
+      var notify = 1;
+      if(this.warning_option.indexOf('email') !== -1)
+        notify += 2;
 
         var pattern= /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         var strEmail=pattern.test(this.address);
@@ -328,11 +312,6 @@ export default {
           })
           return
         }
-      }
-      a=this.warning_option.indexOf('web');
-      if(a !== -1) {
-        notify += 1;
-      }
 
       console.log('notify')
 
@@ -341,7 +320,6 @@ export default {
         "user_id": sessionStorage.getItem("user_id"),
         "notify":notify,
         "email": this.address,
-
       }).then((response) => {
         //console.log('address'+this.address)
         console.log(response)
@@ -350,7 +328,7 @@ export default {
 
           this.$q.notify({
             type: 'positive',
-            message: 'Send Successfully!'
+            message: 'Save Successfully!'
           })
           this.reportText = ""
 
