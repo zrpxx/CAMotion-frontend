@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <video id="videoElement" controls autoplay muted width="100%" height="100%">
+    <video id="videoElement" autoplay muted width="100%" height="100%">
     </video>
   </div>
 </template>
@@ -29,16 +29,31 @@
           hasAudio: false,
           cors: true,
           url: this.flv_url
-        });
+        },
+          {
+            enableStashBuffer: false
+          }
+        );
         this.flvPlayer.attachMediaElement(videoElement);
         this.flvPlayer.load();
         this.flvPlayer.play();
       }
     },
+
+    created() {
+      setInterval(() => {
+        if (!this.flvPlayer.buffered.length) {
+          return;
+        }
+        let end = this.flvPlayer.buffered.end(0);
+        let diff = end - this.flvPlayer.currentTime;
+        if (diff >= 1.5) {
+          this.flvPlayer.currentTime = end;
+        }
+      }, 3000);
+    },
+
     methods:{
-      play () {
-        this.flvPlayer.play();
-      }
     }
   }
 </script>
