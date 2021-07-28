@@ -242,7 +242,7 @@ export default {
             a.Time = elem.time;
             console.log("time:"+elem.time);
             a.Content = elem.info;
-            a.image = elem.attachment;
+            a.image = elem.images;
             //a.Result = elem.info;
             // ···
             realData.push(a);
@@ -315,7 +315,7 @@ export default {
         //{name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
         {name: 'Content', label: 'Content', field: 'Content', sortable: false, align: 'center'},
         //{name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
-        {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
+        {name: 'Action', label: 'Action', field: 'Action', sortable: false, align: 'center'}
       ],
       data:[]
     }
