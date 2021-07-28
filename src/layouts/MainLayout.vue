@@ -162,18 +162,24 @@ export default {
       let msg = e.data
       let notify = {}
       switch (msg) {
-        case 'welcome':
+        /*case 'welcome':
           notify = {
             type: 'positive',
             message: 'Connection established.'
           }
-          break;
+          break;*/
         case 'working':
           notify = {
             type: 'positive',
             message: 'New camera online!',
             actions: [
-              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/cam') } }
+              { label: 'Check it out', color: 'white', handler: () => {
+                  if(this.$route.path !== '/cam')
+                    this.$router.push('/cam')
+                  else
+                    this.$router.go(0)
+                }
+              }
             ]
           }
           break;
@@ -182,7 +188,13 @@ export default {
             type: 'negative',
             message: 'Camera offline!',
             actions: [
-              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/cam') } }
+              { label: 'Check it out', color: 'white', handler: () => {
+                  if(this.$route.path !== '/cam')
+                    this.$router.push('/cam')
+                  else
+                    this.$router.go(0)
+                }
+              }
             ]
           }
           break;
@@ -191,14 +203,21 @@ export default {
             type: 'negative',
             message: 'Alert triggered!',
             actions: [
-              { label: 'Check it out', color: 'white', handler: () => { this.$router.push('/alert_log') } }
+              { label: 'Check it out', color: 'white', handler: () => {
+                  if(this.$route.path !== '/alert_log')
+                    this.$router.push('/alert_log')
+                  else
+                    this.$router.go(0)
+                }
+              }
             ]
           }
           break;
         default:
           notify = {}
       }
-      this.$q.notify(notify)
+      if(notify !== {})
+        this.$q.notify(notify)
     }
   }
 }
