@@ -58,7 +58,8 @@
     <q-card-section class="q-pa-none">
       <q-table grid :data="data" :columns="columns" hide-bottom>
         <template v-slot:top-right>
-          <q-btn side label="Add camera" @click="prompt()" icon="add_to_photos" color="primary"></q-btn>
+          <q-btn side label="Buy VIP to add more cam" disable v-if="!judge_vip()" icon="add_to_photos" color="primary"></q-btn>
+          <q-btn side label="Add camera" v-else @click="prompt()" icon="add_to_photos" color="primary"></q-btn>
 
           <q-btn side label="Delete all" @click="confirm_delete_all=true" icon="clear_all" color="primary" style="margin-left:10px;"></q-btn>
         </template>
@@ -98,6 +99,16 @@ export default {
   },
   methods: {
 
+
+    judge_vip(){
+      if(sessionStorage.getItem('VIP') === 'true' || this.data.length < 1) {
+        this.VIP = true
+        return true
+      } else
+        this.VIP = false
+      return false
+    },
+
     prompt () {
       this.$q.dialog({
         title: 'Add Camera',
@@ -118,44 +129,45 @@ export default {
     },
 
    create_cam(data){
-      if(data!=="") {
-        console.log({
-          uid: sessionStorage.getItem('user_id'),
-          name: data
-        })
-        this.$axios.post('http://camotion.zrp.cool:8000/create_camera', {
-          uid: sessionStorage.getItem('user_id'),
-          name: data
-        }).then((response) => {
-          console.log(response)
-          let res = response.data
-          if (res.status === 'Success') {
-            this.$router.go(0)
-            this.$q.notify({
-              type: 'positive',
-              message: 'create Successfully!'
-            })
-            this.$router.go(0)
-          } else {
-            //console.log(res.message)
-            this.$q.notify({
-              type: 'warning',
-              message: res.message
-            })
-          }
-        }).catch((error) => {
-          console.log(error)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Internal error.'
+        if (data !== "") {
+          console.log({
+            uid: sessionStorage.getItem('user_id'),
+            name: data
           })
-        })
-      }else{
-        this.$q.notify({
-          type: 'warning',
-          message: 'The id is null'
-        })
-      }
+          this.$axios.post('http://camotion.zrp.cool:8000/create_camera', {
+            uid: sessionStorage.getItem('user_id'),
+            name: data
+          }).then((response) => {
+            console.log(response)
+            let res = response.data
+            if (res.status === 'Success') {
+              this.$router.go(0)
+              this.$q.notify({
+                type: 'positive',
+                message: 'create Successfully!'
+              })
+              this.$router.go(0)
+            } else {
+              //console.log(res.message)
+              this.$q.notify({
+                type: 'warning',
+                message: res.message
+              })
+            }
+          }).catch((error) => {
+            console.log(error)
+            this.$q.notify({
+              type: 'negative',
+              message: 'Internal error.'
+            })
+          })
+        } else {
+          this.$q.notify({
+            type: 'warning',
+            message: 'The id is null'
+          })
+        }
+
    },
     delete_All(){
       this.$axios.post('http://camotion.zrp.cool:8000/delete_all_cam?delete_uid='+sessionStorage.getItem('user_id')).then((response) => {
@@ -185,7 +197,7 @@ export default {
     },
   },
   created(){
-      this.$axios.get('http://camotion.zrp.cool:8000/cameras/' + sessionStorage.getItem("user_id"))
+        this.$axios.get('http://camotion.zrp.cool:8000/cameras/' + sessionStorage.getItem("user_id"))
         .then( (response) => {
         console.log(response)
         let res = response.data
