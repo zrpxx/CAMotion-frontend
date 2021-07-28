@@ -3,7 +3,8 @@
   <q-card>
     <q-card-section class="q-pa-none">
       <q-table :data="data"
-               :columns="columns">
+               :columns="columns"
+               :pagination.sync="pagination">
         <template v-slot:body-cell-Action="props">
           <q-td :props="props">
             <q-btn icon="image" size="md" @click="image = props.row.image,card = true" flat dense/>
@@ -69,6 +70,12 @@ export default {
   name: "TableActions",
   data() {
     return {
+      pagination: {
+        sortBy: 'Time',
+        descending: true,
+        rowsPerPage: 40
+        // rowsNumber: xx if getting data from a server
+      },
       card: false,
 
       slide: 1,
@@ -100,7 +107,7 @@ export default {
         {name: 'Camera_number', label: 'Camera_number', field: 'Camera_number', sortable: true, align: 'center'},
         {name: 'Content', label: 'Content', field: 'Content', sortable: false, align: 'center'},
         //{name: 'Result', label: 'Result', field: 'Result', sortable: false, align: 'center',   style :"color:red"},
-        {name: 'Action', label: '操作', field: 'Action', sortable: false, align: 'center'}
+        {name: 'Action', label: 'Action', field: 'Action', sortable: false, align: 'center'}
       ],
     }
   },
@@ -126,6 +133,7 @@ export default {
           // ···
           realData.push(a);
           this.data = realData;
+          console.log("this.data"+this.data)
         }
         console.log('data', this.data)
       }).catch( (error) => {
