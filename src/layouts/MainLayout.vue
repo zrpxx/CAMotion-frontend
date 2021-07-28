@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          CAMotion
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>Made with ❤️ by 张丹丹 张濡芃 杨璐歌 刘慧杰 熊师意 罗宝泉</div>
       </q-toolbar>
     </q-header>
 
