@@ -15,7 +15,6 @@
           </q-card-section>
           <q-card-section class="text-center">
             <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'User'" @click="buy_vip()"> 购买会员 </q-btn>
-            <q-btn class="text-capitalize" color = "primary" v-if="user_role === 'Vip'" > 取消会员 </q-btn>
           </q-card-section>
         </q-card>
       </div>
@@ -156,7 +155,8 @@ export default {
       warning_options: [
         {
           label: '网页通知',
-          value: ''
+          value: '',
+          disable: true
         },
         {
           label: '电子邮件',
